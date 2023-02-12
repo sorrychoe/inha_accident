@@ -28,7 +28,7 @@ inha %>%
   geom_bar(width = 1, stat = 'identity', color = "white")+
   theme(axis.text.y = element_blank(),axis.ticks = element_blank(), legend.text = element_text(size = 9))+
   geom_text(aes(label = paste(round(n/sum(n)*100, 2),"%")),
-            position = position_stack(vjust = 0.5),
+            position = position_stack(vjust = 0.6),
             check_overlap = TRUE,
             color = 'white')+
   coord_polar('y', start = 0)+
@@ -75,44 +75,41 @@ inha %>%
   rowid_to_column() %>%
   unnest_tokens(
     input = "키워드",
-    output = "단어") -> inha.words
-
-inha.words %>% 
+    output = "단어") %>% 
   group_by(언론사) %>% 
   filter(nchar(단어) >= 2) %>% 
-  count(`단어`, sort = TRUE) %>%
+  count(`단어`, sort = TRUE)-> inha.words
+
+reorder_within <- function(x, by, within, fun = sum, sep = "___", ...) {
+  new_x <- paste(x, within, sep = sep)
+  stats::reorder(new_x, by, FUN = fun)
+}
+
+inha.words %>% 
   slice_max(n, n = 10) %>%
-  ggplot(aes(x = n, y = reorder(단어, n), fill = 언론사)) +
+  ggplot(aes(x = n, y = reorder_within(단어, n, 언론사), fill = 언론사)) +
   geom_col(show.legend = F) +
   facet_wrap(~ 언론사, scales = 'free') + 
   scale_y_reordered()+
   xlab("")+
   ylab("")
 
-inha.words %>% 
-  group_by(언론사) %>% 
-  filter(nchar(단어) >= 2) %>% 
-  count(`단어`, sort = TRUE) %>% 
-  bind_log_odds(set = 언론사, feature = 단어, n = n) %>% 
-  arrange(-log_odds_weighted)-> log.odd.df
+inha.words %>%
+  bind_tf_idf(document = 언론사, term = 단어, n = n) %>% 
+  filter(grepl("[가-힣]", 단어)) %>% 
+  mutate(score = round(tf_idf * 1000, 3)) %>% 
+  arrange(-score) -> tfidf.df
 
-log.odd.df$log_odds_weighted <- round(log.odd.df$log_odds_weighted, 3)
-
-log.odd.df %>% 
-  slice_max(log_odds_weighted, n = 10) %>%
-  ggplot(aes(x = log_odds_weighted, y = reorder(단어,log_odds_weighted), fill = 언론사)) +
+tfidf.df %>% 
+  slice_max(score, n = 5) %>%
+  ggplot(aes(x = score, y = reorder_within(단어, score, 언론사), fill = 언론사)) +
   geom_col(show.legend = F) +
   facet_wrap(~ 언론사, scales = 'free') + 
   scale_y_reordered()+
   xlab("")+
   ylab("")
 
-inha.words %>% 
-  group_by(언론사) %>% 
-  filter(nchar(단어) >= 2) %>% 
-  count(`단어`, sort = TRUE) -> inha.text
-
-texts <- split(inha.text, inha.text$언론사)
+texts <- split(inha.words, inha.words$언론사)
 
 top15 <-function(x){
   x <- x %>% head(20)
@@ -180,24 +177,26 @@ words %>%
     단어_29 = "단어",
     n_30 = "빈도")
 
-texts.odd <- split(log.odd.df, log.odd.df$언론사)
+
+texts.tfidf <- split(tfidf.df, tfidf.df$언론사)
 
 num = 1
-for (k in texts.odd){
+for (k in texts.tfidf){
+  k <- k %>% select(언론사, 단어, n, score)
   k <- top15(k)
   if (num == 1){
-    words.odd = k
+    words.tfidf = k
     num = 2
   }else{
-    words.odd <- cbind(words.odd, k)
+    words.tfidf <- cbind(words.tfidf, k)
   }
 }
 
-varnames.odd <- c('언론사', '단어', '빈도', '가중로그승산비')
+varnames.tfidf<- c('언론사', '단어', '빈도', 'tfidf')
 
-names(words.odd)[1:ncol(words.odd)]<- paste0(varnames.odd,"_",1:40)
+names(words.tfidf)[1:ncol(words.tfidf)]<- paste0(varnames.tfidf,"_",1:40)
 
-words.odd %>% 
+words.tfidf %>% 
   select(!starts_with('언론사') & !starts_with('빈도')) %>% 
   gt() %>% 
   tab_header('언론사 별 단어 상대 빈도') %>% 
@@ -223,22 +222,24 @@ words.odd %>%
               columns = 19:20)%>% 
   cols_label(
     단어_2 = "단어",
-    가중로그승산비_4 = "odd",
+    tfidf_4 = "tfidf",
     단어_6 = "단어",
-    가중로그승산비_8 = "odd",
+    tfidf_8 = "tfidf",
     단어_10 = "단어",
-    가중로그승산비_12 = "odd",
+    tfidf_12 = "tfidf",
     단어_14 = "단어",
-    가중로그승산비_16 = "odd",
+    tfidf_16 = "tfidf",
     단어_18 = "단어",
-    가중로그승산비_20 = "odd",
+    tfidf_20 = "tfidf",
     단어_22 = "단어",
-    가중로그승산비_24 = "odd",
+    tfidf_24 = "tfidf",
     단어_26 = "단어",
-    가중로그승산비_28 = "odd",
+    tfidf_28 = "tfidf",
     단어_30 = "단어",
-    가중로그승산비_32 = "odd",
+    tfidf_32 = "tfidf",
     단어_34 = "단어",
-    가중로그승산비_36 = "odd",
+    tfidf_36 = "tfidf",
     단어_38 = "단어",
-    가중로그승산비_40 = "odd")
+    tfidf_40 = "tfidf")
+
+
