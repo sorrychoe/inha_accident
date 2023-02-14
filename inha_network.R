@@ -3,10 +3,9 @@ library(plotly)
 library(tidytext)
 library(tidylo)
 library(gt) 
-library(janitor)
 library(igraph)
 library(quanteda)
-
+library(quanteda.textplots)
 
 dim(inha) #362
 
@@ -33,7 +32,7 @@ inha.words %>%
 tfidf.df %>%
   filter(grepl("[가-힣]", 단어)) %>% 
   group_by(언론사) %>%
-  slice_max(score, n = 20) -> dtm.df
+  slice_max(score, n = 25) -> dtm.df
 
 
 ######
@@ -54,11 +53,17 @@ diag(com) <- 0
 com<- as.data.frame(com)
 
 dfm <- as.dfm(com)
-fcm<- fcm(dfm)
+fc<- fcm(dfm)
 
-quanteda.textplots::textplot_network(fcm, 
-                 min_freq = 1, 
+feat <- names(topfeatures(fc, 100))
+fcm_re <- fcm_select(fc, pattern = feat, selection = "keep")
+
+size = log(colSums(fcm_re)) / max(log(colSums(fcm_re))) * 5
+
+textplot_network(fcm_re, 
+                 min_freq = 1.5, 
                  edge_alpha = 0.5, 
                  edge_color = "blue",
-                 vertex_labelsize = rowSums(fcm),
+                 vertex_size = size,
                  edge_size = 2)
+

@@ -3,7 +3,6 @@ library(plotly)
 library(tidytext)
 library(tidylo)
 library(gt) 
-library(janitor)
 
 unique(inha$군집)
 
