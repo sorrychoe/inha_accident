@@ -32,7 +32,7 @@ inha.words %>%
 tfidf.df %>%
   filter(grepl("[가-힣]", 단어)) %>% 
   group_by(언론사) %>%
-  slice_max(score, n = 25) -> dtm.df
+  slice_max(score, n = 15) -> dtm.df
 
 
 ######
@@ -55,15 +55,14 @@ com<- as.data.frame(com)
 dfm <- as.dfm(com)
 fc<- fcm(dfm)
 
-feat <- names(topfeatures(fc, 100))
-fcm_re <- fcm_select(fc, pattern = feat, selection = "keep")
+size = log(colSums(fc)) / max(log(colSums(fc))) * 5
 
-size = log(colSums(fcm_re)) / max(log(colSums(fcm_re))) * 5
+options(ggrepel.max.overlaps = 19)
 
-textplot_network(fcm_re, 
-                 min_freq = 1.5, 
+textplot_network(fc, 
+                 min_freq = 2, 
                  edge_alpha = 0.5, 
                  edge_color = "blue",
                  vertex_size = size,
-                 edge_size = 2)
+                 edge_size = 0.5)
 
