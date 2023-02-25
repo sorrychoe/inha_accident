@@ -136,11 +136,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>지난 2022년 7월 15일, 인하대학교 재학생 강간살인 사건의 언론 재현 수준을 분석한 보고서이다.</p>
 <p>먼저 해당 사건 발생일 기준 3개월 간의 뉴스 기사 데이터를 수집하였다.해당 기간 이후의 기사는 대체적으로 본 사건과 관련이 없는 기사가 많았다. 이에, 총 3개월 치의 기사만 수집하였다.</p>
 <p>기사는 빅카인즈(BigKinds)를 통해 수집하였다. 포털 사이트의 기사를 크롤링을 하는 방법도 있으나, 포털 뉴스 특성상 기사가 중복된 내용이거나, 지나친 편향성을 지닌 기사가 많아, 해당 내용은 본 분석에서 제외하였다.</p>
-<p>또한 언론의 어젠다를 분석하는데 있어 주요 신문사들의 보도를 보는 것이 좋다고 판단하여 총 10개의 언론사(“세계일보” “문화일보” “경향신문” “동아일보” “한겨레” “서울신문” “한국일보” “중앙일보” “국민일보” “조선일보”)의 기사를 선별하여 데이터를 수집했다.</p>
+<p>또한 언론의 어젠다를 분석하는데 있어 주요 신문사들의 보도를 보는 것이 좋다고 판단하여 총 10개의 언론사(“세계일보”, “문화일보”, “경향신문”, “동아일보”, “한겨레”, “서울신문”,“한국일보”,“중앙일보”, “국민일보”,“조선일보”)의 기사를 선별하여 데이터를 수집했다.</p>
 <p>추가로, 7월 15일부터 10월 15일의 기간에 보도된 기사 중, 해당 사건과 관련 없는 기사를 필터링하였다. 기사 필터링은 Python 환경에서 진행하였으며, 해당 내용 자체만으로도 내용이 많아, 별도의 문서에서 다루기로 하였다.</p>
 <p>분석에 사용된 총 기사의 갯수는 다음과 같다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(inha)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 362   4</code></pre>
 </div>
@@ -149,25 +148,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="단어-분석" class="level1">
 <h1>단어 분석</h1>
-<p>우선 먼저 등장한 단어는 총 4190개가 등장하였다.</p>
+<p>먼저 기사에 사용된 단어를 분석한 결과, 총 4190개로 나타났다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(키워드) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">input =</span> <span class="st">"키워드"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">"단어"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">nchar</span>(단어) <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">단어</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="ot">-&gt;</span> words</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(words) <span class="co">#4190</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4190    2</code></pre>
 </div>
 </div>
 <p>상위 15개의 주요 단어를 추출한 결과는 다음과 같다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>words <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">15</span>) <span class="co">#counter</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 2
    단어       n
@@ -194,19 +182,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="보도-빈도-분석">보도 빈도 분석</h2>
 <p>언론사 별 보도 빈도는 다음과 같다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span> <span class="fu">tab_header</span>(<span class="st">'언론사 별 보도 빈도'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(언론사 <span class="ot">=</span> <span class="st">"언론사"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span> <span class="fu">tab_header</span>(<span class="st">'언론사 별 보도 빈도'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(언론사 <span class="ot">=</span> <span class="st">"언론사"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="qdkfxbaevy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jaaburmabg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#qdkfxbaevy) .gt_table {
+:where(#jaaburmabg) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -231,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#qdkfxbaevy) .gt_heading {
+:where(#jaaburmabg) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -243,7 +231,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#qdkfxbaevy) .gt_title {
+:where(#jaaburmabg) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -255,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#qdkfxbaevy) .gt_subtitle {
+:where(#jaaburmabg) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -267,13 +255,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#qdkfxbaevy) .gt_bottom_border {
+:where(#jaaburmabg) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#qdkfxbaevy) .gt_col_headings {
+:where(#jaaburmabg) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -288,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#qdkfxbaevy) .gt_col_heading {
+:where(#jaaburmabg) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -308,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#qdkfxbaevy) .gt_column_spanner_outer {
+:where(#jaaburmabg) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -320,15 +308,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#qdkfxbaevy) .gt_column_spanner_outer:first-child {
+:where(#jaaburmabg) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#qdkfxbaevy) .gt_column_spanner_outer:last-child {
+:where(#jaaburmabg) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#qdkfxbaevy) .gt_column_spanner {
+:where(#jaaburmabg) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -340,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#qdkfxbaevy) .gt_group_heading {
+:where(#jaaburmabg) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -365,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#qdkfxbaevy) .gt_empty_group_heading {
+:where(#jaaburmabg) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -380,15 +368,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#qdkfxbaevy) .gt_from_md > :first-child {
+:where(#jaaburmabg) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#qdkfxbaevy) .gt_from_md > :last-child {
+:where(#jaaburmabg) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#qdkfxbaevy) .gt_row {
+:where(#jaaburmabg) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -407,7 +395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#qdkfxbaevy) .gt_stub {
+:where(#jaaburmabg) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -420,461 +408,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#qdkfxbaevy) .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-:where(#qdkfxbaevy) .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-:where(#qdkfxbaevy) .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#qdkfxbaevy) .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-:where(#qdkfxbaevy) .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#qdkfxbaevy) .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-:where(#qdkfxbaevy) .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#qdkfxbaevy) .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#qdkfxbaevy) .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#qdkfxbaevy) .gt_left {
-  text-align: left;
-}
-
-:where(#qdkfxbaevy) .gt_center {
-  text-align: center;
-}
-
-:where(#qdkfxbaevy) .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-:where(#qdkfxbaevy) .gt_font_normal {
-  font-weight: normal;
-}
-
-:where(#qdkfxbaevy) .gt_font_bold {
-  font-weight: bold;
-}
-
-:where(#qdkfxbaevy) .gt_font_italic {
-  font-style: italic;
-}
-
-:where(#qdkfxbaevy) .gt_super {
-  font-size: 65%;
-}
-
-:where(#qdkfxbaevy) .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 75%;
-  vertical-align: 0.4em;
-}
-
-:where(#qdkfxbaevy) .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-:where(#qdkfxbaevy) .gt_indent_1 {
-  text-indent: 5px;
-}
-
-:where(#qdkfxbaevy) .gt_indent_2 {
-  text-indent: 10px;
-}
-
-:where(#qdkfxbaevy) .gt_indent_3 {
-  text-indent: 15px;
-}
-
-:where(#qdkfxbaevy) .gt_indent_4 {
-  text-indent: 20px;
-}
-
-:where(#qdkfxbaevy) .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">언론사 별 보도 빈도</td>
-    </tr>
-    
-  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">언론사</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">빈도</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">세계일보</td>
-<td class="gt_row gt_right">81</td></tr>
-    <tr><td class="gt_row gt_left">서울신문</td>
-<td class="gt_row gt_right">45</td></tr>
-    <tr><td class="gt_row gt_left">국민일보</td>
-<td class="gt_row gt_right">40</td></tr>
-    <tr><td class="gt_row gt_left">조선일보</td>
-<td class="gt_row gt_right">36</td></tr>
-    <tr><td class="gt_row gt_left">동아일보</td>
-<td class="gt_row gt_right">35</td></tr>
-    <tr><td class="gt_row gt_left">중앙일보</td>
-<td class="gt_row gt_right">35</td></tr>
-    <tr><td class="gt_row gt_left">경향신문</td>
-<td class="gt_row gt_right">26</td></tr>
-    <tr><td class="gt_row gt_left">한겨레</td>
-<td class="gt_row gt_right">24</td></tr>
-    <tr><td class="gt_row gt_left">한국일보</td>
-<td class="gt_row gt_right">24</td></tr>
-    <tr><td class="gt_row gt_left">문화일보</td>
-<td class="gt_row gt_right">16</td></tr>
-  </tbody>
-  
-  
-</table>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span> <span class="fu">tab_header</span>(<span class="st">'언론사 별 보도 빈도'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(언론사 <span class="ot">=</span> <span class="st">"언론사"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div id="jctjcxjsac" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-:where(#jctjcxjsac) .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-:where(#jctjcxjsac) .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#jctjcxjsac) .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-:where(#jctjcxjsac) .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-:where(#jctjcxjsac) .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#jctjcxjsac) .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#jctjcxjsac) .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-:where(#jctjcxjsac) .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-:where(#jctjcxjsac) .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-:where(#jctjcxjsac) .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-:where(#jctjcxjsac) .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-:where(#jctjcxjsac) .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-:where(#jctjcxjsac) .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-:where(#jctjcxjsac) .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-:where(#jctjcxjsac) .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-:where(#jctjcxjsac) .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-:where(#jctjcxjsac) .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#jctjcxjsac) .gt_stub_row_group {
+:where(#jaaburmabg) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -888,11 +422,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#jctjcxjsac) .gt_row_group_first td {
+:where(#jaaburmabg) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#jctjcxjsac) .gt_summary_row {
+:where(#jaaburmabg) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -902,16 +436,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jctjcxjsac) .gt_first_summary_row {
+:where(#jaaburmabg) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_first_summary_row.thick {
+:where(#jaaburmabg) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#jctjcxjsac) .gt_last_summary_row {
+:where(#jaaburmabg) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -921,7 +455,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_grand_summary_row {
+:where(#jaaburmabg) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -931,7 +465,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jctjcxjsac) .gt_first_grand_summary_row {
+:where(#jaaburmabg) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -941,11 +475,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_striped {
+:where(#jaaburmabg) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#jctjcxjsac) .gt_table_body {
+:where(#jaaburmabg) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -954,7 +488,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_footnotes {
+:where(#jaaburmabg) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -968,7 +502,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_footnote {
+:where(#jaaburmabg) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -977,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jctjcxjsac) .gt_sourcenotes {
+:where(#jaaburmabg) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -991,7 +525,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jctjcxjsac) .gt_sourcenote {
+:where(#jaaburmabg) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -999,64 +533,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jctjcxjsac) .gt_left {
+:where(#jaaburmabg) .gt_left {
   text-align: left;
 }
 
-:where(#jctjcxjsac) .gt_center {
+:where(#jaaburmabg) .gt_center {
   text-align: center;
 }
 
-:where(#jctjcxjsac) .gt_right {
+:where(#jaaburmabg) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#jctjcxjsac) .gt_font_normal {
+:where(#jaaburmabg) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#jctjcxjsac) .gt_font_bold {
+:where(#jaaburmabg) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#jctjcxjsac) .gt_font_italic {
+:where(#jaaburmabg) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#jctjcxjsac) .gt_super {
+:where(#jaaburmabg) .gt_super {
   font-size: 65%;
 }
 
-:where(#jctjcxjsac) .gt_footnote_marks {
+:where(#jaaburmabg) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#jctjcxjsac) .gt_asterisk {
+:where(#jaaburmabg) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#jctjcxjsac) .gt_indent_1 {
+:where(#jaaburmabg) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#jctjcxjsac) .gt_indent_2 {
+:where(#jaaburmabg) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#jctjcxjsac) .gt_indent_3 {
+:where(#jaaburmabg) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#jctjcxjsac) .gt_indent_4 {
+:where(#jaaburmabg) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#jctjcxjsac) .gt_indent_5 {
+:where(#jaaburmabg) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1109,19 +643,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>이전에 기사 필터링을 진행하여 나타난 군집들의 양상을 근거로 언론사들의 보도 스탠스를 유추하여 보았다.</p>
 <p>군집 별 기사 빈도는 다음과 같다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(군집) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span> <span class="fu">tab_header</span>(<span class="st">'군집 별 기사 빈도'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(군집 <span class="ot">=</span> <span class="st">"군집"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(군집) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">gt</span>() <span class="sc">%&gt;%</span> <span class="fu">tab_header</span>(<span class="st">'군집 별 기사 빈도'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(군집 <span class="ot">=</span> <span class="st">"군집"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="wkljydauqp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="sqgjdmpjpb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#wkljydauqp) .gt_table {
+:where(#sqgjdmpjpb) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1146,7 +680,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_heading {
+:where(#sqgjdmpjpb) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1158,7 +692,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_title {
+:where(#sqgjdmpjpb) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1170,7 +704,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#wkljydauqp) .gt_subtitle {
+:where(#sqgjdmpjpb) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1182,13 +716,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#wkljydauqp) .gt_bottom_border {
+:where(#sqgjdmpjpb) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_col_headings {
+:where(#sqgjdmpjpb) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1203,7 +737,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_col_heading {
+:where(#sqgjdmpjpb) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1223,7 +757,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#wkljydauqp) .gt_column_spanner_outer {
+:where(#sqgjdmpjpb) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1235,15 +769,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#wkljydauqp) .gt_column_spanner_outer:first-child {
+:where(#sqgjdmpjpb) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#wkljydauqp) .gt_column_spanner_outer:last-child {
+:where(#sqgjdmpjpb) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#wkljydauqp) .gt_column_spanner {
+:where(#sqgjdmpjpb) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1255,7 +789,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#wkljydauqp) .gt_group_heading {
+:where(#sqgjdmpjpb) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1280,7 +814,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#wkljydauqp) .gt_empty_group_heading {
+:where(#sqgjdmpjpb) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1295,15 +829,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#wkljydauqp) .gt_from_md > :first-child {
+:where(#sqgjdmpjpb) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#wkljydauqp) .gt_from_md > :last-child {
+:where(#sqgjdmpjpb) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#wkljydauqp) .gt_row {
+:where(#sqgjdmpjpb) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,7 +856,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#wkljydauqp) .gt_stub {
+:where(#sqgjdmpjpb) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1335,7 +869,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#wkljydauqp) .gt_stub_row_group {
+:where(#sqgjdmpjpb) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1349,11 +883,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#wkljydauqp) .gt_row_group_first td {
+:where(#sqgjdmpjpb) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#wkljydauqp) .gt_summary_row {
+:where(#sqgjdmpjpb) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1363,16 +897,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#wkljydauqp) .gt_first_summary_row {
+:where(#sqgjdmpjpb) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_first_summary_row.thick {
+:where(#sqgjdmpjpb) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#wkljydauqp) .gt_last_summary_row {
+:where(#sqgjdmpjpb) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1382,7 +916,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_grand_summary_row {
+:where(#sqgjdmpjpb) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1392,7 +926,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#wkljydauqp) .gt_first_grand_summary_row {
+:where(#sqgjdmpjpb) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,11 +936,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_striped {
+:where(#sqgjdmpjpb) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#wkljydauqp) .gt_table_body {
+:where(#sqgjdmpjpb) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1415,7 +949,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_footnotes {
+:where(#sqgjdmpjpb) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1429,7 +963,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_footnote {
+:where(#sqgjdmpjpb) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1438,7 +972,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#wkljydauqp) .gt_sourcenotes {
+:where(#sqgjdmpjpb) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1452,7 +986,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#wkljydauqp) .gt_sourcenote {
+:where(#sqgjdmpjpb) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1460,64 +994,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#wkljydauqp) .gt_left {
+:where(#sqgjdmpjpb) .gt_left {
   text-align: left;
 }
 
-:where(#wkljydauqp) .gt_center {
+:where(#sqgjdmpjpb) .gt_center {
   text-align: center;
 }
 
-:where(#wkljydauqp) .gt_right {
+:where(#sqgjdmpjpb) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#wkljydauqp) .gt_font_normal {
+:where(#sqgjdmpjpb) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#wkljydauqp) .gt_font_bold {
+:where(#sqgjdmpjpb) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#wkljydauqp) .gt_font_italic {
+:where(#sqgjdmpjpb) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#wkljydauqp) .gt_super {
+:where(#sqgjdmpjpb) .gt_super {
   font-size: 65%;
 }
 
-:where(#wkljydauqp) .gt_footnote_marks {
+:where(#sqgjdmpjpb) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#wkljydauqp) .gt_asterisk {
+:where(#sqgjdmpjpb) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#wkljydauqp) .gt_indent_1 {
+:where(#sqgjdmpjpb) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#wkljydauqp) .gt_indent_2 {
+:where(#sqgjdmpjpb) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#wkljydauqp) .gt_indent_3 {
+:where(#sqgjdmpjpb) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#wkljydauqp) .gt_indent_4 {
+:where(#sqgjdmpjpb) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#wkljydauqp) .gt_indent_5 {
+:where(#sqgjdmpjpb) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1559,96 +1093,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>이들 중 언론사의 어젠다 설정 방향을 유추할 수 있는 군집인 “인하대 사건 조사보도”, “인하대 사건 그 이후”, “젠더 이슈”를 추출하여 언론사 별 보도 비율을 확인하였다.</p>
 <p>먼저 인하대 사건 조사보도 군집에 해당하는 기사들의 언론사 구성 비율이다</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'인하대 사건 조사보도'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.6</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'인하대 사건 조사보도'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.6</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>그 다음 인하대 사건 그 이후 군집에 해당하는 기사들의 언론사 구성 비율이다</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'인하대 사건 그 이후'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'인하대 사건 그 이후'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>마지막으로 젠더 이슈에 대한 기사들의 언론사 구성 비율이다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'젠더 이슈'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(군집 <span class="sc">==</span> <span class="st">'젠더 이슈'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(언론사) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> n, <span class="at">fill =</span> 언론사))<span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))<span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),<span class="st">"%"</span>)),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">'white'</span>)<span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">'y'</span>, <span class="at">start =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
 </section>
 <section id="언론사-별-단어-분석" class="level2">
 <h2 class="anchored" data-anchor-id="언론사-별-단어-분석">언론사 별 단어 분석</h2>
+<p>언론사 별로 주로 사용한 단어는 다음과 같다.</p>
 <div class="cell">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>inha.words <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> <span class="fu">reorder_within</span>(단어, n, 언론사), <span class="at">fill =</span> 언론사)) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> 언론사, <span class="at">scales =</span> <span class="st">'free'</span>) <span class="sc">+</span> </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reordered</span>()<span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inha.words <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> <span class="fu">reorder_within</span>(단어, n, 언론사), <span class="at">fill =</span> 언론사)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> 언론사, <span class="at">scales =</span> <span class="st">'free'</span>) <span class="sc">+</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reordered</span>()<span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>표로 변환한 결과는 다음과 같다.</p>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="bpuwsdwvbo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="zhjnmxifbv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#bpuwsdwvbo) .gt_table {
+:where(#zhjnmxifbv) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1673,7 +1209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_heading {
+:where(#zhjnmxifbv) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1685,7 +1221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_title {
+:where(#zhjnmxifbv) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1697,7 +1233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_subtitle {
+:where(#zhjnmxifbv) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1709,13 +1245,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_bottom_border {
+:where(#zhjnmxifbv) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_col_headings {
+:where(#zhjnmxifbv) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1730,7 +1266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_col_heading {
+:where(#zhjnmxifbv) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1750,7 +1286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#bpuwsdwvbo) .gt_column_spanner_outer {
+:where(#zhjnmxifbv) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1762,15 +1298,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#bpuwsdwvbo) .gt_column_spanner_outer:first-child {
+:where(#zhjnmxifbv) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_column_spanner_outer:last-child {
+:where(#zhjnmxifbv) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_column_spanner {
+:where(#zhjnmxifbv) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1782,7 +1318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#bpuwsdwvbo) .gt_group_heading {
+:where(#zhjnmxifbv) .gt_group_heading {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1807,7 +1343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#bpuwsdwvbo) .gt_empty_group_heading {
+:where(#zhjnmxifbv) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1822,15 +1358,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#bpuwsdwvbo) .gt_from_md > :first-child {
+:where(#zhjnmxifbv) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_from_md > :last-child {
+:where(#zhjnmxifbv) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_row {
+:where(#zhjnmxifbv) .gt_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1849,7 +1385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#bpuwsdwvbo) .gt_stub {
+:where(#zhjnmxifbv) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1862,7 +1398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_stub_row_group {
+:where(#zhjnmxifbv) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1876,11 +1412,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#bpuwsdwvbo) .gt_row_group_first td {
+:where(#zhjnmxifbv) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#bpuwsdwvbo) .gt_summary_row {
+:where(#zhjnmxifbv) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1890,16 +1426,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_first_summary_row {
+:where(#zhjnmxifbv) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_first_summary_row.thick {
+:where(#zhjnmxifbv) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#bpuwsdwvbo) .gt_last_summary_row {
+:where(#zhjnmxifbv) .gt_last_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1909,7 +1445,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_grand_summary_row {
+:where(#zhjnmxifbv) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1919,7 +1455,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_first_grand_summary_row {
+:where(#zhjnmxifbv) .gt_first_grand_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1929,11 +1465,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_striped {
+:where(#zhjnmxifbv) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#bpuwsdwvbo) .gt_table_body {
+:where(#zhjnmxifbv) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1942,7 +1478,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_footnotes {
+:where(#zhjnmxifbv) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1956,7 +1492,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_footnote {
+:where(#zhjnmxifbv) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 1px;
@@ -1965,7 +1501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_sourcenotes {
+:where(#zhjnmxifbv) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1979,7 +1515,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#bpuwsdwvbo) .gt_sourcenote {
+:where(#zhjnmxifbv) .gt_sourcenote {
   font-size: 90%;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -1987,64 +1523,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_left {
+:where(#zhjnmxifbv) .gt_left {
   text-align: left;
 }
 
-:where(#bpuwsdwvbo) .gt_center {
+:where(#zhjnmxifbv) .gt_center {
   text-align: center;
 }
 
-:where(#bpuwsdwvbo) .gt_right {
+:where(#zhjnmxifbv) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#bpuwsdwvbo) .gt_font_normal {
+:where(#zhjnmxifbv) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#bpuwsdwvbo) .gt_font_bold {
+:where(#zhjnmxifbv) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#bpuwsdwvbo) .gt_font_italic {
+:where(#zhjnmxifbv) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#bpuwsdwvbo) .gt_super {
+:where(#zhjnmxifbv) .gt_super {
   font-size: 65%;
 }
 
-:where(#bpuwsdwvbo) .gt_footnote_marks {
+:where(#zhjnmxifbv) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#bpuwsdwvbo) .gt_asterisk {
+:where(#zhjnmxifbv) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#bpuwsdwvbo) .gt_indent_1 {
+:where(#zhjnmxifbv) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#bpuwsdwvbo) .gt_indent_2 {
+:where(#zhjnmxifbv) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#bpuwsdwvbo) .gt_indent_3 {
+:where(#zhjnmxifbv) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#bpuwsdwvbo) .gt_indent_4 {
+:where(#zhjnmxifbv) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#bpuwsdwvbo) .gt_indent_5 {
+:where(#zhjnmxifbv) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2519,31 +2055,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p>상대 빈도를 분석한 결과는 다음과 같다.</p>
+<p>상대 빈도 분석은 tf-idf로 진행했다.</p>
 <div class="cell">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tfidf.df <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(score, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> <span class="fu">reorder_within</span>(단어, score, 언론사), <span class="at">fill =</span> 언론사)) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> 언론사, <span class="at">scales =</span> <span class="st">'free'</span>) <span class="sc">+</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reordered</span>()<span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tfidf.df <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(score, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> <span class="fu">reorder_within</span>(단어, score, 언론사), <span class="at">fill =</span> 언론사)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> 언론사, <span class="at">scales =</span> <span class="st">'free'</span>) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reordered</span>()<span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>표로 변환한 결과는 다음과 같다.</p>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="jwynmiecoq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bgibjtkust" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#jwynmiecoq) .gt_table {
+:where(#bgibjtkust) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2568,7 +2107,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_heading {
+:where(#bgibjtkust) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2580,7 +2119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_title {
+:where(#bgibjtkust) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2592,7 +2131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#jwynmiecoq) .gt_subtitle {
+:where(#bgibjtkust) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2604,13 +2143,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#jwynmiecoq) .gt_bottom_border {
+:where(#bgibjtkust) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_col_headings {
+:where(#bgibjtkust) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2625,7 +2164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_col_heading {
+:where(#bgibjtkust) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2645,7 +2184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#jwynmiecoq) .gt_column_spanner_outer {
+:where(#bgibjtkust) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2657,15 +2196,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#jwynmiecoq) .gt_column_spanner_outer:first-child {
+:where(#bgibjtkust) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#jwynmiecoq) .gt_column_spanner_outer:last-child {
+:where(#bgibjtkust) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#jwynmiecoq) .gt_column_spanner {
+:where(#bgibjtkust) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2677,7 +2216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#jwynmiecoq) .gt_group_heading {
+:where(#bgibjtkust) .gt_group_heading {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2702,7 +2241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#jwynmiecoq) .gt_empty_group_heading {
+:where(#bgibjtkust) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2717,15 +2256,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#jwynmiecoq) .gt_from_md > :first-child {
+:where(#bgibjtkust) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#jwynmiecoq) .gt_from_md > :last-child {
+:where(#bgibjtkust) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#jwynmiecoq) .gt_row {
+:where(#bgibjtkust) .gt_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2744,7 +2283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#jwynmiecoq) .gt_stub {
+:where(#bgibjtkust) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2757,7 +2296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jwynmiecoq) .gt_stub_row_group {
+:where(#bgibjtkust) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2771,11 +2310,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#jwynmiecoq) .gt_row_group_first td {
+:where(#bgibjtkust) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#jwynmiecoq) .gt_summary_row {
+:where(#bgibjtkust) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2785,16 +2324,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jwynmiecoq) .gt_first_summary_row {
+:where(#bgibjtkust) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_first_summary_row.thick {
+:where(#bgibjtkust) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#jwynmiecoq) .gt_last_summary_row {
+:where(#bgibjtkust) .gt_last_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2804,7 +2343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_grand_summary_row {
+:where(#bgibjtkust) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2814,7 +2353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jwynmiecoq) .gt_first_grand_summary_row {
+:where(#bgibjtkust) .gt_first_grand_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2824,11 +2363,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_striped {
+:where(#bgibjtkust) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#jwynmiecoq) .gt_table_body {
+:where(#bgibjtkust) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2837,7 +2376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_footnotes {
+:where(#bgibjtkust) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2851,7 +2390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_footnote {
+:where(#bgibjtkust) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 1px;
@@ -2860,7 +2399,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jwynmiecoq) .gt_sourcenotes {
+:where(#bgibjtkust) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2874,7 +2413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#jwynmiecoq) .gt_sourcenote {
+:where(#bgibjtkust) .gt_sourcenote {
   font-size: 90%;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -2882,64 +2421,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#jwynmiecoq) .gt_left {
+:where(#bgibjtkust) .gt_left {
   text-align: left;
 }
 
-:where(#jwynmiecoq) .gt_center {
+:where(#bgibjtkust) .gt_center {
   text-align: center;
 }
 
-:where(#jwynmiecoq) .gt_right {
+:where(#bgibjtkust) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#jwynmiecoq) .gt_font_normal {
+:where(#bgibjtkust) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#jwynmiecoq) .gt_font_bold {
+:where(#bgibjtkust) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#jwynmiecoq) .gt_font_italic {
+:where(#bgibjtkust) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#jwynmiecoq) .gt_super {
+:where(#bgibjtkust) .gt_super {
   font-size: 65%;
 }
 
-:where(#jwynmiecoq) .gt_footnote_marks {
+:where(#bgibjtkust) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#jwynmiecoq) .gt_asterisk {
+:where(#bgibjtkust) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#jwynmiecoq) .gt_indent_1 {
+:where(#bgibjtkust) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#jwynmiecoq) .gt_indent_2 {
+:where(#bgibjtkust) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#jwynmiecoq) .gt_indent_3 {
+:where(#bgibjtkust) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#jwynmiecoq) .gt_indent_4 {
+:where(#bgibjtkust) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#jwynmiecoq) .gt_indent_5 {
+:where(#bgibjtkust) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3419,17 +2958,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="press-network-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="press-network-analysis">Press Network Analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">table</span>(dtm.df[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>press <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(dtm)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(press) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(press)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>press.nt <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(dtm, <span class="at">mode=</span><span class="st">"undirected"</span>, <span class="at">weighted=</span><span class="cn">TRUE</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(press.nt)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clust, press.nt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">table</span>(dtm.df[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>press <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(dtm)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(press) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(press)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>press.nt <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(dtm, <span class="at">mode=</span><span class="st">"undirected"</span>, <span class="at">weighted=</span><span class="cn">TRUE</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(press.nt)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clust, press.nt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
@@ -3437,30 +2976,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="sementic-network-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="sementic-network-analysis">Sementic Network Analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> <span class="fu">table</span>(dtm.df[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(com)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(com) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>com<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(com)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> <span class="fu">as.dfm</span>(com)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>fc<span class="ot">&lt;-</span> <span class="fu">fcm</span>(dfm)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>size <span class="ot">=</span> <span class="fu">log</span>(<span class="fu">colSums</span>(fc)) <span class="sc">/</span> <span class="fu">max</span>(<span class="fu">log</span>(<span class="fu">colSums</span>(fc))) <span class="sc">*</span> <span class="dv">5</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggrepel.max.overlaps =</span> <span class="dv">19</span>)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_network</span>(fc, </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">min_freq =</span> <span class="dv">2</span>, </span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_color =</span> <span class="st">"blue"</span>,</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">vertex_size =</span> size,</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ggrepel: 90 unlabeled data points (too many overlaps). Consider
-increasing max.overlaps</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> <span class="fu">table</span>(dtm.df[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(com)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(com) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>com<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(com)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> <span class="fu">as.dfm</span>(com)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>fc<span class="ot">&lt;-</span> <span class="fu">fcm</span>(dfm)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>size <span class="ot">=</span> <span class="fu">log</span>(<span class="fu">colSums</span>(fc)) <span class="sc">/</span> <span class="fu">max</span>(<span class="fu">log</span>(<span class="fu">colSums</span>(fc))) <span class="sc">*</span> <span class="dv">5</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggrepel.max.overlaps =</span> <span class="dv">19</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_network</span>(fc, </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">min_freq =</span> <span class="dv">2</span>, </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_color =</span> <span class="st">"blue"</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">vertex_size =</span> size,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="accident_report_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>

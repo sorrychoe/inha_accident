@@ -82,13 +82,6 @@ inha %>%
   arrange(desc(n)) %>% gt() %>% tab_header('언론사 별 보도 빈도') %>% 
   cols_label(언론사 = "언론사", n = '빈도')
 ```
-```{r}
-inha %>% 
-  group_by(언론사) %>% 
-  tally() %>% 
-  arrange(desc(n)) %>% gt() %>% tab_header('언론사 별 보도 빈도') %>% 
-  cols_label(언론사 = "언론사", n = '빈도')
-```
 
 보도 빈도만 두고 본 결과, 3개월의 기간 동안 해당 어젠다를 중점적으로 다룬 언론사는 세계일보였다.
 그 외에는 전반적으로 비슷한 수준의 보도를 진행하였다.
@@ -204,9 +197,7 @@ inha.words %>%
   ylab("")
 ```
 
-상대 빈도를 분석한 결과는 다음과 같다.
-
-상대 빈도 분석은 tf-idf로 진행했다.
+표로 변환한 결과는 다음과 같다.
 ```{r, echo = F, message=F}
 texts <- split(inha.words, inha.words$언론사)
 
@@ -233,6 +224,7 @@ names(words)[1:ncol(words)]<- paste0(varnames,"_",1:30)
 words %>% 
   select(!starts_with('언론사')) %>% 
   gt() %>% 
+  tab_options(container.width = 300, container.height = 300) %>%
   tab_header('언론사 별 단어 빈도') %>% 
   tab_spanner(label = "경향신문",
               columns = 1:2) %>% 
@@ -283,6 +275,9 @@ press.word.counter %>%
     row_group.padding = px(1))
 ```
 
+상대 빈도를 분석한 결과는 다음과 같다.
+
+상대 빈도 분석은 tf-idf로 진행했다.
 ```{r, echo = F, message=F}
 
 inha.words %>%
@@ -303,6 +298,7 @@ tfidf.df %>%
   ylab("")
 ```
 
+표로 변환한 결과는 다음과 같다.
 ```{r, echo = F, message=F}
 
 texts.tfidf <- split(tfidf.df, tfidf.df$언론사)
@@ -403,7 +399,9 @@ plot(clust, press.nt)
 
 ## Sementic Network Analysis
 
-```{r, message=F}
+```{r}
+#| warning: false
+
 com <- table(dtm.df[1:2])
 com <- crossprod(com)
 diag(com) <- 0

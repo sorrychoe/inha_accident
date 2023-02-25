@@ -9,13 +9,15 @@ unique(inha$군집)
 inha %>% 
   group_by(언론사) %>% 
   tally() %>% 
-  arrange(desc(n)) %>% gt() %>% tab_header('언론사 별 보도 빈도') %>% 
+  arrange(desc(n)) %>% gt() %>% tab_options(table.font.size = 15) %>% 
+  tab_header('언론사 별 보도 빈도') %>% 
   cols_label(언론사 = "언론사", n = '빈도')
 
 inha %>% 
   group_by(군집) %>% 
   tally() %>% 
-  arrange(desc(n)) %>% gt() %>% tab_header('군집 별 기사 빈도') %>% 
+  arrange(desc(n)) %>% gt() %>% tab_options(table.font.size = 15) %>%
+  tab_header('군집 별 기사 빈도') %>% 
   cols_label(군집 = "군집", n = '빈도')
 
 inha %>% 
@@ -133,6 +135,7 @@ names(words)[1:ncol(words)]<- paste0(varnames,"_",1:30)
 words %>% 
   select(!starts_with('언론사')) %>% 
   gt() %>% 
+  tab_options(container.width = 400, container.height =1000, table.font.size = 15) %>% 
   tab_header('언론사 별 단어 빈도') %>% 
   tab_spanner(label = "경향신문",
               columns = 1:2) %>% 
