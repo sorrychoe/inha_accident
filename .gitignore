@@ -1,10 +1,10 @@
-/.mrx-link-logs/
-
+# font
 /NanumBarunGothic.ttf
 
+# for python
 /__pycache__/
-<<<<<<< HEAD
 
 /.ipynb_checkpoints/
 
+# for module
 BigKindsParser.py
