@@ -135,7 +135,7 @@ names(words)[1:ncol(words)]<- paste0(varnames,"_",1:30)
 words %>% 
   select(!starts_with('언론사')) %>% 
   gt() %>% 
-  tab_options(container.width = 400, container.height =1000, table.font.size = 15) %>% 
+  tab_options(table.font.size= 10, heading.title.font.size=15, column_labels.font.size = 12) %>% 
   tab_header('언론사 별 단어 빈도') %>% 
   tab_spanner(label = "경향신문",
               columns = 1:2) %>% 

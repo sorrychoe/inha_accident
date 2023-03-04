@@ -40,7 +40,7 @@ inha <- read_excel("./inha_topic.xlsx")
 또한 언론의 어젠다를 분석하는데 있어 주요 신문사들의 보도를 보는 것이 좋다고 판단하여 총 10개의 언론사("세계일보", "문화일보", "경향신문", "동아일보", "한겨레", "서울신문","한국일보","중앙일보", "국민일보","조선일보")의 기사를 선별하여 데이터를 수집했다.
 
 추가로, 7월 15일부터 10월 15일의 기간에 보도된 기사 중, 해당 사건과 관련 없는 기사를 필터링하였다. 
-기사 필터링은 Python 환경에서 진행하였으며, 해당 내용 자체만으로도 내용이 많아, 별도의 문서에서 다루기로 하였다.
+기사 필터링은 Python 환경에서 진행하였으며, 해당 내용 자체만으로도 내용이 많아, 별도의 문서에서 다루기로 한다.
 
 분석에 사용된 총 기사의 갯수는 다음과 같다.
 ```{r, echo = F}
@@ -197,87 +197,10 @@ inha.words %>%
   ylab("")
 ```
 
-표로 변환한 결과는 다음과 같다.
-```{r, echo = F, message=F}
-texts <- split(inha.words, inha.words$언론사)
 
-top15 <-function(x){
-  x <- x %>% head(20)
-  return(x)
-}
+tf-idf를 활용하여 단어 별 상대 빈도를 도출했다.
 
-num = 1
-for (k in texts){
-  k <- top15(k)
-  if (num == 1){
-    words = k
-    num = 2
-  }else{
-  words <- cbind(words, k)
-  }
-}
-
-varnames <- c('언론사', '단어', 'n')
-
-names(words)[1:ncol(words)]<- paste0(varnames,"_",1:30)
-
-words %>% 
-  select(!starts_with('언론사')) %>% 
-  gt() %>% 
-  tab_options(container.width = 300, container.height = 300) %>%
-  tab_header('언론사 별 단어 빈도') %>% 
-  tab_spanner(label = "경향신문",
-              columns = 1:2) %>% 
-  tab_spanner(label = "국민일보", 
-              columns = 3:4)%>% 
-  tab_spanner(label = "동아일보", 
-              columns = 5:6)%>%
-  tab_spanner(label = "문화일보", 
-              columns = 7:8)%>% 
-  tab_spanner(label = "서울신문", 
-              columns = 9:10)%>%
-  tab_spanner(label = "세계일보", 
-              columns = 11:12)%>% 
-  tab_spanner(label = "조선일보", 
-              columns = 13:14)%>%
-  tab_spanner(label = "중앙일보", 
-              columns = 15:16)%>%
-  tab_spanner(label = "한겨례", 
-              columns = 17:18)%>%
-  tab_spanner(label = "한국일보", 
-              columns = 19:20)%>% 
-  cols_label(
-    단어_2 = "단어",
-    n_3 = "빈도",
-    단어_5 = "단어",
-    n_6 = "빈도",
-    단어_8 = "단어",
-    n_9 = "빈도",
-    단어_11 = "단어",
-    n_12 = "빈도",
-    단어_14 = "단어",
-    n_15 = "빈도",
-    단어_17 = "단어",
-    n_18 = "빈도",
-    단어_20 = "단어",
-    n_21 = "빈도",
-    단어_23 = "단어",
-    n_24 = "빈도",
-    단어_26 = "단어",
-    n_27 = "빈도",
-    단어_29 = "단어",
-    n_30 = "빈도") -> press.word.counter
-
-press.word.counter %>% 
-  tab_options(table.font.size = 5, data_row.padding = px(1), 
-    summary_row.padding = px(1), grand_summary_row.padding = px(1), 
-    footnotes.padding = px(1), source_notes.padding = px(1), 
-    row_group.padding = px(1))
-```
-
-상대 빈도를 분석한 결과는 다음과 같다.
-
-상대 빈도 분석은 tf-idf로 진행했다.
+상대 빈도 분석 결과는 다음과 같다.
 ```{r, echo = F, message=F}
 
 inha.words %>%
@@ -298,84 +221,16 @@ tfidf.df %>%
   ylab("")
 ```
 
-표로 변환한 결과는 다음과 같다.
-```{r, echo = F, message=F}
-
-texts.tfidf <- split(tfidf.df, tfidf.df$언론사)
-
-num = 1
-for (k in texts.tfidf){
-  k <- k %>% select(언론사, 단어, n, score)
-  k <- top15(k)
-  if (num == 1){
-    words.tfidf = k
-    num = 2
-  }else{
-    words.tfidf <- cbind(words.tfidf, k)
-  }
-}
-
-varnames.tfidf<- c('언론사', '단어', '빈도', 'tfidf')
-
-names(words.tfidf)[1:ncol(words.tfidf)]<- paste0(varnames.tfidf,"_",1:40)
-
-words.tfidf %>% 
-  select(!starts_with('언론사') & !starts_with('빈도')) %>% 
-  gt() %>% 
-  tab_header('언론사 별 단어 상대 빈도') %>% 
-  tab_spanner(label = "경향신문",
-              columns = 1:2) %>% 
-  tab_spanner(label = "국민일보", 
-              columns = 3:4)%>% 
-  tab_spanner(label = "동아일보", 
-              columns = 5:6)%>%
-  tab_spanner(label = "문화일보", 
-              columns = 7:8)%>% 
-  tab_spanner(label = "서울신문", 
-              columns = 9:10)%>%
-  tab_spanner(label = "세계일보", 
-              columns = 11:12)%>% 
-  tab_spanner(label = "조선일보", 
-              columns = 13:14)%>%
-  tab_spanner(label = "중앙일보", 
-              columns = 15:16)%>%
-  tab_spanner(label = "한겨례", 
-              columns = 17:18)%>%
-  tab_spanner(label = "한국일보", 
-              columns = 19:20)%>% 
-  cols_label(
-    단어_2 = "단어",
-    tfidf_4 = "tfidf",
-    단어_6 = "단어",
-    tfidf_8 = "tfidf",
-    단어_10 = "단어",
-    tfidf_12 = "tfidf",
-    단어_14 = "단어",
-    tfidf_16 = "tfidf",
-    단어_18 = "단어",
-    tfidf_20 = "tfidf",
-    단어_22 = "단어",
-    tfidf_24 = "tfidf",
-    단어_26 = "단어",
-    tfidf_28 = "tfidf",
-    단어_30 = "단어",
-    tfidf_32 = "tfidf",
-    단어_34 = "단어",
-    tfidf_36 = "tfidf",
-    단어_38 = "단어",
-    tfidf_40 = "tfidf") -> press.tfidf.counter
-
-press.tfidf.counter %>% 
-  tab_options(table.font.size = 5, data_row.padding = px(1), 
-    summary_row.padding = px(1), grand_summary_row.padding = px(1), 
-    footnotes.padding = px(1), source_notes.padding = px(1), 
-    row_group.padding = px(1))
-```
-
 <hr/>
 
 ## Press Network Analysis
 
+먼저, 언론사 간 네트워크 분석을 실시했다.
+
+본 분석은 tf-idf로 상대 빈도 분석을 진행한 데이터를 기준으로, 
+공동으로 등장하는 단어에 기반하여 네트워크 분석을 실시했다.
+
+분석 결과의 정확성 확보를 위해 한국어가 아닌 단어들(영문, 숫자 등)은 분석에서 제외했다.
 ```{r, include=F}
 tfidf.df %>%
   filter(grepl("[가-힣]", 단어)) %>% 
@@ -383,7 +238,11 @@ tfidf.df %>%
   slice_max(score, n = 15) -> dtm.df
 ```
 
-```{r}
+또한 네트워크 분석과 함께 군집화를 진행했다. 문서 간의 유사도가 높은 네트워크를 중심으로 군집을 형성했다.
+유사도 판정 기준은 분석에 사용한 프로그래밍 언어인 R의 유사도 검정 기능을 활용했다. 
+
+네트워크 분석 결과는 다음과 같다. 
+```{r, echo = F}
 dtm <- t(table(dtm.df[1:2]))
 press <- crossprod(dtm)
 diag(press) <- 0
@@ -391,7 +250,9 @@ dtm <- as.matrix(press)
 
 press.nt <- graph_from_adjacency_matrix(dtm, mode="undirected", weighted=TRUE)
 clust <- cluster_walktrap(press.nt)
+```
 
+```{r}
 plot(clust, press.nt)
 ```
 
@@ -399,8 +260,13 @@ plot(clust, press.nt)
 
 ## Sementic Network Analysis
 
-```{r}
-#| warning: false
+마지막으로 단어 간의 의미 연결망 분석을 실시했다. 
+네트워크 분석의 경우, 데이터를 통해 동시 출현 단어 행렬을 형성하고, 이를 토대로 quenteda를 활용하여 네트워크 분석을 시도했다.
+
+분석 결과는 다음과 같다.
+
+```{r, echo=F}
+options(ggrepel.max.overlaps = 19)
 
 com <- table(dtm.df[1:2])
 com <- crossprod(com)
@@ -411,8 +277,10 @@ dfm <- as.dfm(com)
 fc<- fcm(dfm)
 
 size = log(colSums(fc)) / max(log(colSums(fc))) * 5
+```
 
-options(ggrepel.max.overlaps = 19)
+```{r}
+#| warning: false
 
 textplot_network(fc, 
                  min_freq = 2, 
