@@ -4,7 +4,7 @@
 
 <hr/>
 
-## about dir
+## 각 파일 소개
 
 ```
 inha_clustering.ipynb
