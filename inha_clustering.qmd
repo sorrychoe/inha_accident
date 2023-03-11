@@ -1,0 +1,479 @@
+---
+title: "인하대학교 강간살인 사건 언론 재현 분석"
+subtitle: "Cluster analysis"
+author: "sorrychoe"
+format: 
+  html: 
+    smooth-scroll: true
+editor: visual
+execute: 
+  echo: true
+  eval: true
+---
+
+```{python setup, include=F, message=F}
+import BigKindsParser as bkp
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from wordcloud import WordCloud
+
+import warnings
+warnings.filterwarnings("ignore")
+
+import konlpy
+okt = konlpy.tag.Okt()
+
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams['figure.figsize'] = 8,8
+sns.set(font="Malgun Gothic", rc={"axes.unicode_minus":False}, style='white')
+```
+
+```{python}
+news_df = pd.read_excel("./inha_3month.xlsx", engine = 'openpyxl')
+```
+
+## 언론사 확인
+
+```{python}
+press = bkp.press_counter(news_df)
+```
+
+```{python}
+sns.barplot(data = press, x = "기사", y = "언론사")
+```
+
+### 포토 기사 필터링
+
+```{python}
+filt = news_df[news_df['제목'].str.contains('포토')].index
+news_df.drop(filt, inplace=True)
+news_df.reset_index(drop = True, inplace = True)
+```
+
+## 키워드 빈도
+
+```{python}
+lis = bkp.keywords_list(news_df["키워드"])
+```
+
+```{python}
+key = bkp.keyword_parser(lis)
+```
+
+```{python}
+key = bkp.duplication_remover(key)
+```
+
+```{python}
+key_words = bkp.word_counter(key)
+key_words = bkp.counter_to_DataFrame(key_words)
+```
+
+```{python}
+wc = WordCloud(font_path = './NanumBarunGothic.ttf',
+    width = 500,
+    height = 500,
+    background_color='white').generate_from_frequencies(key_words.set_index('단어').to_dict()["빈도"])
+
+
+plt.figure(figsize = (8, 8))
+plt.imshow(wc)
+plt.axis('off')
+plt.show()
+```
+
+## 언론사 별 단어 빈도 분석
+
+```{python}
+news_df['언론사'].unique()
+```
+
+```{python}
+bkp.press_keywords_wordcloud(news_df, '조선일보')
+```
+
+```{python}
+bkp.press_keywords_wordcloud(news_df, '중앙일보')
+```
+
+```{python}
+bkp.press_keywords_wordcloud(news_df, '동아일보')
+```
+
+```{python}
+bkp.press_keywords_wordcloud(news_df, '한겨레')
+```
+
+```{python}
+bkp.press_keywords_wordcloud(news_df, '경향신문')
+```
+
+## 제목 단어 빈도 분석
+
+```{python}
+title = bkp.keywords_list(news_df['제목'])
+```
+
+```{python}
+words = []
+for i in range(len(title)):
+    word = okt.nouns(title[i])
+    words.append(word)
+```
+
+```{python}
+news_titles = bkp.word_counter(words)
+news_titles = bkp.counter_to_DataFrame(news_titles)
+```
+
+```{python}
+news_titles= news_titles[news_titles["단어"].str.len() >=2].reset_index(drop = True)
+```
+
+```{python}
+news_titles = news_titles.head(20)
+```
+
+```{python}
+sns.barplot(data = news_titles, x = '빈도', y = '단어')
+```
+
+## 키워드 분석 with Bigram
+
+```{python}
+from nltk import bigrams
+```
+
+```{python}
+wor = []
+
+for sentence in key:
+    bigram = bigrams(sentence)
+    for t in bigram:
+        if t[0]== '성폭행':
+            wor.append(t[1])
+        elif t[1] == '성폭행':
+            wor.append(t[0])
+```
+
+```{python}
+counter = {}
+
+for word in wor:
+    if not word in counter:
+        counter[word] = 1
+    elif word in counter:
+        counter[word] +=1
+```
+
+```{python}
+vio_df = bkp.counter_to_DataFrame(counter)
+vio_df = vio_df[vio_df['단어'].str.len() >= 2].reset_index(drop = True)
+```
+
+```{python}
+sns.barplot(data = vio_df, x = '빈도', y = '단어')
+```
+
+```{python}
+wor = []
+
+for sentence in key:
+    bigram = bigrams(sentence)
+    for t in bigram:
+        if t[0]== '여대생':
+            wor.append(t[1])
+        elif t[1] == '여대생':
+            wor.append(t[0])
+```
+
+```{python}
+counter = {}
+
+for word in wor:
+    if not word in counter:
+        counter[word] = 1
+    elif word in counter:
+        counter[word] +=1
+```
+
+```{python}
+vio_df = bkp.counter_to_DataFrame(counter)
+vio_df = vio_df[vio_df['단어'].str.len() >= 2].reset_index(drop = True)
+```
+
+```{python}
+sns.barplot(data = vio_df, x = '빈도', y = '단어')
+```
+
+## 제목 분석 with Bigram
+
+```{python}
+title = bkp.keywords_list(news_df['제목'])
+```
+
+```{python}
+bot = []
+for i in range(len(title)):
+    word = okt.nouns(title[i])
+    bot.append(word)
+```
+
+```{python}
+wors = []
+
+for sentence in bot:
+    bigram = bigrams(sentence)
+    for t in bigram:
+        if t[0]== '인하대':
+            wors.append(t[1])
+        elif t[1] == '인하대':
+            wors.append(t[0])
+```
+
+```{python}
+counter = {}
+
+for word in wors:
+    if not word in counter:
+        counter[word] = 1
+    if word in counter:
+        counter[word] +=1
+        
+title_df = bkp.counter_to_DataFrame(counter)
+title_df = title_df[title_df['단어'].str.len() >= 2].reset_index(drop = True)
+```
+
+```{python}
+title_df = title_df.head(30)
+sns.barplot(data = title_df, x = '빈도', y = '단어')
+```
+
+## 특정 단어 사용 고빈도 언론사 추출
+
+```{python}
+news_df[news_df['제목'].str.contains('여대생')].groupby('언론사').size()
+```
+
+```{python}
+news_df[news_df['본문'].str.contains('여대생')].groupby('언론사').size()
+```
+
+```{python}
+news_df[news_df['제목'].str.contains('강간')].groupby('언론사').size()
+```
+
+## t-SNE
+
+```{python}
+text = news_df['키워드']
+```
+
+```{python}
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.pipeline import Pipeline
+
+pipeline = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+])        
+vec = pipeline.fit_transform(text).toarray()
+```
+
+```{python}
+from sklearn.preprocessing import Normalizer
+
+nor = Normalizer()
+norvec = nor.fit_transform(vec)
+```
+
+```{python}
+from sklearn.manifold import TSNE
+
+tsne = TSNE(n_components=2, learning_rate=400).fit_transform(norvec)
+
+tsne_df = pd.DataFrame(tsne, columns = ['component 0', 'component 1'])
+```
+
+```{python}
+plt.scatter(tsne_df['component 0'], tsne_df['component 1'], color = 'orange')
+
+plt.xlabel('component 0')
+plt.ylabel('component 1')
+plt.legend()
+plt.show()
+```
+
+문서 간 밀접 여부 파악이 어려움
+
+Clustering의 정확도가 낮을 것으로 예상
+
+# Topic Modeling
+
+```{python}
+news_words = bkp.keyword_parser(news_df['키워드'])
+```
+
+```{python}
+import gensim
+news_dict = gensim.corpora.Dictionary(news_words)
+corpus = [news_dict.doc2bow(text) for text in news_words]
+```
+
+```{python}
+coherence = []
+for i in range(2,20):
+    ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics = i, id2word=news_dict, passes=20, iterations=100)
+    coherence_mo_lda = gensim.models.CoherenceModel(model = ldamodel, texts = news_words, dictionary = news_dict) 
+    coherence_lda = coherence_mo_lda.get_coherence()
+    coherence.append(coherence_lda)
+```
+
+```{python}
+x = range(2,20)
+plt.plot(x,coherence)
+plt.xlabel("토픽 개수")
+plt.ylabel("coherence")
+plt.show()
+```
+
+최적 Topic 갯수는 2개로 나타남
+
+그러나 분석을 위해 2번째로 높은 값인 4개를 하이퍼파라미터로 지정
+
+```{python}
+NUM_TOPICS = 4
+ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics = NUM_TOPICS, id2word=news_dict, passes=20, iterations=100, random_state=10)
+topics = ldamodel.print_topics(num_words=8)
+for topic in topics:
+    print(topic)
+```
+
+```{python}
+def make_topictable(ldamodel, corpus):
+    topic_table = pd.DataFrame()
+
+    for i, topic_list in enumerate(ldamodel[corpus]):
+        doc = topic_list[0] if ldamodel.per_word_topics else topic_list            
+        doc = sorted(doc, key=lambda x: (x[1]), reverse=True)
+
+        for j, (topic_num, prop_topic) in enumerate(doc):
+            if j == 0: 
+                topic_table = topic_table.append(pd.Series([int(topic_num), round(prop_topic,4), topic_list]), ignore_index=True)
+            else:
+                break
+    return(topic_table)
+```
+
+```{python}
+topictable = make_topictable(ldamodel, corpus)
+topictable = topictable.reset_index() 
+```
+
+```{python}
+topictable.columns = ['뉴스 번호', '주요 토픽', '주요 토픽 비중', '토픽 별 비중']
+topictable.head(20)
+```
+
+```{python}
+inha_topic_df = pd.concat([news_df[['제목', '언론사', '키워드']], topictable['주요 토픽']], axis = 1)
+```
+
+```{python}
+inha_topic_df.groupby('주요 토픽').size()
+```
+
+```{python}
+inha_topic_df[inha_topic_df['주요 토픽'] == 0].head(30) #관련 없는 기사 다수
+```
+
+```{python}
+inha_topic_df[inha_topic_df['주요 토픽'] == 1].head(30) #또한 관련 없는 기사
+```
+
+```{python}
+inha_topic_df[inha_topic_df['주요 토픽'] == 2].head(30) #인하대학교 사건 기사가 다수
+```
+
+```{python}
+inha_topic_df[inha_topic_df['주요 토픽'] == 3].head(30) #또한 관련도가 매우 낮은 기사
+```
+
+LDA의 주제 분류가 다소 깔끔하지 않음을 보임
+
+다른 모델을 사용해볼 필요가 있음
+
+# K-means Clustering
+
+```{python}
+from sklearn.cluster import KMeans
+from yellowbrick.cluster import KElbowVisualizer
+
+vzr = KElbowVisualizer(KMeans(max_iter=1000, random_state=10), k=(2, 20))
+vzr.fit(norvec)
+vzr.poof()
+```
+
+```{python}
+from yellowbrick.cluster import SilhouetteVisualizer
+
+kmeans= KMeans(n_clusters=12, max_iter=1000, random_state=10) #최적 Topic 개수 12개를 기점으로 진행
+visualizer = SilhouetteVisualizer(kmeans, colors='yellowbrick')
+```
+
+```{python}
+visualizer.fit(norvec)
+visualizer.show()
+```
+
+```{python}
+topic_df = news_df[['언론사', '제목', '키워드']]
+```
+
+```{python}
+kmeans.fit(norvec)
+
+labels = kmeans.labels_
+
+topic_df['군집'] = labels
+```
+
+```{python}
+topic_df.groupby('군집').size()
+```
+
+```{python}
+topic_df.loc[topic_df['군집']==0, '군집'] = '경제'
+topic_df.loc[topic_df['군집']==1, '군집'] = '리멤버 0715'
+topic_df.loc[topic_df['군집']==2, '군집'] = '인하대 사건 그 이후'
+topic_df.loc[topic_df['군집']==3, '군집'] = '인하대 입시'
+topic_df.loc[topic_df['군집']==4, '군집'] = '인하대 사건 조사보도'
+topic_df.loc[topic_df['군집']==5, '군집'] = '가해자 재판'
+topic_df.loc[topic_df['군집']==6, '군집'] = '젠더 이슈'
+topic_df.loc[topic_df['군집']==7, '군집'] = '가해자 체포'
+topic_df.loc[topic_df['군집']==8, '군집'] = '관련 없는 기사'
+topic_df.loc[topic_df['군집']==9, '군집'] = '학교 측 가해자 징계'
+topic_df.loc[topic_df['군집']==10, '군집'] = '인하대 총장'
+topic_df.loc[topic_df['군집']==11, '군집'] = '부고'
+```
+
+분석 결과, K-Means가 가장 Performance가 가장 좋았음
+
+```{python}
+filter_list = ['경제', '인하대 입시', '관련 없는 기사', '인하대 총장', '부고']
+inha_df = topic_df[~topic_df['군집'].isin(filter_list)]
+inha_df.reset_index(drop = True, inplace = True)
+```
+
+```{python}
+inha_df.to_excel('./inha_topic.xlsx', index=False)
+```
+
+나머지 내용은 R을 이용하여 분석 진행
+
+분석 결과를 Quarto 기반 보고서로 제작 예정
+
