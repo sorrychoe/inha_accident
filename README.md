@@ -17,12 +17,12 @@ inha_visualization.ipynb
 > 뉴스 군집 시각화 pipeline
 
 ```
-inha_counter.R
+data_analysis/inha_counter.R
 ```
 > 뉴스 단어 빈도 분석
 
 ```
-inha_network.R
+data_analysis/inha_network.R
 ```
 > 뉴스 주제 연결망 분석
 
