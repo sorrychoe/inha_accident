@@ -23,7 +23,7 @@ library(quanteda.textplots)
 library(readxl)
 
 
-inha <- read_excel("./inha_topic.xlsx")
+inha <- read_excel("./data_analysis/inha_topic.xlsx")
 ```
 
 <hr/>

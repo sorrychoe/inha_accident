@@ -31,7 +31,7 @@ plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams['figure.figsize'] = 8,8
 sns.set(font="Malgun Gothic", rc={"axes.unicode_minus":False}, style='white')
 
-news_df = pd.read_excel("./inha_3month.xlsx", engine = 'openpyxl')
+news_df = pd.read_excel("./data_analysis/inha_3month.xlsx", engine = 'openpyxl')
 ```
 
 ## 개요
