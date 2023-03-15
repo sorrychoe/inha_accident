@@ -7,12 +7,12 @@
 ## 각 파일 소개
 
 ```
-inha_clustering.ipynb
+data_analysis/inha_clustering.ipynb
 ```
 > 뉴스 군집 분석
 
 ```
-inha_visualization.ipynb
+data_analysis/inha_visualization.ipynb
 ```
 > 뉴스 군집 시각화 pipeline
 
@@ -37,11 +37,11 @@ accident_report.html
 > 분석 결과를 보고서 추출본(html 형식)
 
 ```
-inha_3month.xlsx
+data_analysis/inha_3month.xlsx
 ```
 > raw data
 
 ```
-inha_topic.xlsx
+data_analysis/inha_topic.xlsx
 ```
 > filtered data(through clustering)
