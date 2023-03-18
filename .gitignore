@@ -1,3 +1,25 @@
-/.ipynb_checkpoints/
+# for python
 
-/__pycache__/
+.ipynb_checkpoints/
+
+*/.ipynb_checkpoints/
+__pycache__/
+
+*/__pycache__/
+
+# for R
+
+.Rdata
+
+*/.RData
+
+.Rhistory
+
+*/.Rhistory
+
+
+# others
+*/BigKindsParser.py
+
+*/NanumBarunGothic.ttf
+
