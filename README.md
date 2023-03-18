@@ -14,7 +14,7 @@ data_analysis/inha_clustering.ipynb
 ```
 data_analysis/inha_visualization.ipynb
 ```
-> 뉴스 군집 시각화 pipeline
+> 뉴스 군집 시각화 pipeline 연결
 
 ```
 data_analysis/inha_counter.R
@@ -27,16 +27,6 @@ data_analysis/inha_network.R
 > 뉴스 주제 연결망 분석
 
 ```
-accident_report.qmd
-```
-> 분석 결과를 보고서로 정리한 파일
-
-```
-accident_report.html
-```
-> 분석 결과를 보고서 추출본(html 형식)
-
-```
 data_analysis/inha_3month.xlsx
 ```
 > raw data
@@ -45,3 +35,23 @@ data_analysis/inha_3month.xlsx
 data_analysis/inha_topic.xlsx
 ```
 > filtered data(through clustering)
+
+```
+inha_clustering.qmd
+```
+> news clustering 분석 보고서 qmd 파일 정리본
+
+```
+inha_clustering.html
+```
+> news clustering 분석 보고서 html 추출본
+
+```
+accident_report.qmd
+```
+> 의미연결망 분석 보고서 qmd 파일 정리본
+
+```
+accident_report.html
+```
+> 의미연결망 분석 보고서 html 추출본
