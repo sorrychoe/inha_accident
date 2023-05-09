@@ -1,0 +1,30 @@
+project:
+  type: book
+
+execute:
+  freeze: auto
+
+book:
+  title: "Inha_Accident_Report"
+  author: "Jaeseong Choe"
+  date: today
+  downloads: [epub]
+  url: https://sorrychoe.com
+  repo-url: https://github.com/juba/bookup-html/tree/main/examples/book
+  repo-actions: edit
+  search: true
+  reader-mode: true
+  sidebar:
+    style: "docked"
+  chapters:
+    - index.qmd
+    - part: "Reports"
+      chapters:
+        - inha_clustering.qmd
+        - accident_report.qmd
+
+
+format:
+  bookup-html
+
+
