@@ -213,12 +213,6 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-# python package
-*.py
-
-# Font
-*.ttf
-
-# temporary
-README.md
 /.quarto/
+
+/.luarc.json
