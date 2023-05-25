@@ -1,5 +1,5 @@
 ---
-title: "2. 의미연결망 분석을 중심으로"
+title: "Network Analysis을 중심으로"
 author: "sorrychoe"
 format: 
   html: 
@@ -22,7 +22,7 @@ library(quanteda.textplots)
 library(readxl)
 
 
-inha <- read_excel("./data_analysis/inha_topic.xlsx")
+inha <- read_excel("./data/inha_topic.xlsx")
 ```
 
 <hr/>
@@ -40,7 +40,7 @@ dim(inha)
 
 <hr/>
 
-# 단어 분석
+## 단어 분석
 
 먼저 기사에 사용된 단어를 분석한 결과, 총 4190개로 나타났다.
 

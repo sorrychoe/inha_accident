@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="sorrychoe">
 
-<title>Inha_Accident_Report - 2&nbsp; 인하대학교 강간살인 사건 언론 재현 분석</title>
+<title>Inha_Accident_Report - 2&nbsp; Clustering analysis을 중심으로</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./accident_report.html" rel="next">
+<link href="./inha_network.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inha_clustering.html">Reports</a></li><li class="breadcrumb-item"><a href="./inha_clustering.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inha_clustering.html">Reports</a></li><li class="breadcrumb-item"><a href="./inha_clustering.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Clustering analysis을 중심으로</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론재현 보고서</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론 재현 보고서</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -167,13 +167,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inha_clustering.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Clustering analysis을 중심으로</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./accident_report.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span></a>
+  <a href="./inha_network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Network Analysis을 중심으로</span></span></a>
   </div>
 </li>
       </ul>
@@ -189,8 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요"><span class="header-section-number">2.1</span> 개요</a></li>
-  <li><a href="#데이터-현황-및-필터링" id="toc-데이터-현황-및-필터링" class="nav-link" data-scroll-target="#데이터-현황-및-필터링"><span class="header-section-number">2.2</span> 1. 데이터 현황 및 필터링</a></li>
-  <li><a href="#키워드-빈도-분석" id="toc-키워드-빈도-분석" class="nav-link" data-scroll-target="#키워드-빈도-분석"><span class="header-section-number">2.3</span> 2. 키워드 빈도 분석</a></li>
+  <li><a href="#데이터-현황-및-필터링" id="toc-데이터-현황-및-필터링" class="nav-link" data-scroll-target="#데이터-현황-및-필터링"><span class="header-section-number">2.2</span> 데이터 현황 및 필터링</a></li>
+  <li><a href="#키워드-빈도-분석" id="toc-키워드-빈도-분석" class="nav-link" data-scroll-target="#키워드-빈도-분석"><span class="header-section-number">2.3</span> 키워드 빈도 분석</a></li>
   <li><a href="#dtm-구축" id="toc-dtm-구축" class="nav-link" data-scroll-target="#dtm-구축"><span class="header-section-number">2.4</span> DTM 구축</a></li>
   <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">2.5</span> K-means Clustering</a></li>
   </ul>
@@ -201,8 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></h1>
-<p class="subtitle lead">1. Clustering analysis을 중심으로</p>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Clustering analysis을 중심으로</span></h1>
 </div>
 
 
@@ -231,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>깊게 존재하는 의미 연결망 분석 및 담론 분석은 이후 보고서에서 작성하였다.</p>
 </section>
 <section id="데이터-현황-및-필터링" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="데이터-현황-및-필터링"><span class="header-section-number">2.2</span> 1. 데이터 현황 및 필터링</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="데이터-현황-및-필터링"><span class="header-section-number">2.2</span> 데이터 현황 및 필터링</h2>
 <p>먼저 수집한 기사들의 언론사 구성 빈도는 다음과 같다.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>press <span class="op">=</span> bkp.press_counter(news_df)</span>
@@ -252,11 +251,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="키워드-빈도-분석" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="키워드-빈도-분석"><span class="header-section-number">2.3</span> 2. 키워드 빈도 분석</h2>
+<h2 data-number="2.3" class="anchored" data-anchor-id="키워드-빈도-분석"><span class="header-section-number">2.3</span> 키워드 빈도 분석</h2>
 <p>키워드 빈도 분석을 진행하였다. 단어 전체의 키워드를 추출한 후, 이를 워드클라우드로 변환하여 분석하였다.</p>
 <p>분석 결과는 다음과 같다.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> WordCloud(font_path <span class="op">=</span> <span class="st">'./data_analysis/NanumBarunGothic.ttf'</span>,</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> WordCloud(font_path <span class="op">=</span> <span class="st">'malgun'</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="dv">500</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="dv">500</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    background_color<span class="op">=</span><span class="st">'white'</span>).generate_from_frequencies(key_words.set_index(<span class="st">'단어'</span>).to_dict()[<span class="st">"빈도"</span>])</span>
@@ -276,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>분석 결과는 다음과 같다.</p>
 <p><strong>조선일보</strong></p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bkp.press_keywords_wordcloud(news_df, <span class="st">'조선일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bkp.keywords_wordcloud(news_df, <span class="st">'조선일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="inha_clustering_files/figure-html/cell-7-output-1.png" width="611" height="611"></p>
 </div>
@@ -284,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p><strong>중앙일보</strong></p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bkp.press_keywords_wordcloud(news_df, <span class="st">'중앙일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bkp.keywords_wordcloud(news_df, <span class="st">'중앙일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="inha_clustering_files/figure-html/cell-8-output-1.png" width="611" height="611"></p>
 </div>
@@ -292,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p><strong>동아일보</strong></p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bkp.press_keywords_wordcloud(news_df, <span class="st">'동아일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bkp.keywords_wordcloud(news_df, <span class="st">'동아일보'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="inha_clustering_files/figure-html/cell-9-output-1.png" width="611" height="611"></p>
 </div>
@@ -300,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p><strong>한겨례</strong></p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bkp.press_keywords_wordcloud(news_df, <span class="st">'한겨레'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bkp.keywords_wordcloud(news_df, <span class="st">'한겨레'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="inha_clustering_files/figure-html/cell-10-output-1.png" width="611" height="611"></p>
 </div>
@@ -308,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p><strong>경향신문</strong></p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bkp.press_keywords_wordcloud(news_df, <span class="st">'경향신문'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bkp.keywords_wordcloud(news_df, <span class="st">'경향신문'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="inha_clustering_files/figure-html/cell-11-output-1.png" width="611" height="611"></p>
 </div>
@@ -375,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>vzr.fit(norvec)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>vzr.poof()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="inha_clustering_files/figure-html/cell-15-output-1.png" width="720" height="486"></p>
+<p><img src="inha_clustering_files/figure-html/cell-15-output-1.png" width="712" height="486"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>&lt;Axes: title={'center': 'Distortion Score Elbow for KMeans Clustering'}, xlabel='k', ylabel='distortion score'&gt;</code></pre>
@@ -399,16 +398,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>전반적으로 계수가 높지 않았다. 다만, 텍스트 데이터 특성상 실루엣 계수가 낮아도 의미적으로는 문제가 없는 경우가 다소 있어,’ k 값은 elbow method의 결과인 12로 진행하기로 결정하였다.</p>
-<p><br></p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>kmeans.fit(norvec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(max_iter=1000, n_clusters=12, random_state=10)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">KMeans</label><div class="sk-toggleable__content"><pre>KMeans(max_iter=1000, n_clusters=12, random_state=10)</pre></div></div></div></div></div>
+</div>
+</div>
 <p>군집 별 기사 갯수는 다음과 같다.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> kmeans.labels_</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>topic_df <span class="op">=</span> news_df[[<span class="st">'언론사'</span>, <span class="st">'제목'</span>, <span class="st">'키워드'</span>]]</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>topic_df[<span class="st">'군집'</span>] <span class="op">=</span> labels</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>topic_df.groupby(<span class="st">'군집'</span>).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> kmeans.labels_</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>topic_df <span class="op">=</span> news_df[[<span class="st">'언론사'</span>, <span class="st">'제목'</span>, <span class="st">'키워드'</span>]]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>topic_df[<span class="st">'군집'</span>] <span class="op">=</span> labels</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>topic_df.groupby(<span class="st">'군집'</span>).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>군집
 0      34
@@ -429,25 +433,25 @@ dtype: int64</code></pre>
 <p><br></p>
 <p>군집 내 기사들의 내용을 분석한 결과, 다음과 같이 클러스터링이 진행됐다.</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">0</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'경제'</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">1</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'리멤버 0715'</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">2</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 사건 그 이후'</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">3</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 입시'</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">4</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 사건 조사보도'</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">5</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'가해자 재판'</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">6</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'젠더 이슈'</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">7</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'가해자 체포'</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">8</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'관련 없는 기사'</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">9</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'학교 측 가해자 징계'</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">10</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 총장'</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">11</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'부고'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">0</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'경제'</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">1</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'리멤버 0715'</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">2</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 사건 그 이후'</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">3</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 입시'</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">4</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 사건 조사보도'</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">5</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'가해자 재판'</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">6</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'젠더 이슈'</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">7</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'가해자 체포'</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">8</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'관련 없는 기사'</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">9</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'학교 측 가해자 징계'</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">10</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'인하대 총장'</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>topic_df.loc[topic_df[<span class="st">'군집'</span>]<span class="op">==</span><span class="dv">11</span>, <span class="st">'군집'</span>] <span class="op">=</span> <span class="st">'부고'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>다음 결과 중 본 사건과 관련 없는 기사는 별도로 필터링한 상태로, 데이터를 추출하였다.</p>
 <p>해당 데이터를 통해 의미 연결망 분석을 진행하였으며, 해당 내용은 “2. 의미연결망 분석을 중심으로” 편에서 다루기로 한다.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>filter_list <span class="op">=</span> [<span class="st">'경제'</span>, <span class="st">'인하대 입시'</span>, <span class="st">'관련 없는 기사'</span>, <span class="st">'인하대 총장'</span>, <span class="st">'부고'</span>]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>inha_df <span class="op">=</span> topic_df[<span class="op">~</span>topic_df[<span class="st">'군집'</span>].isin(filter_list)]</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>inha_df.reset_index(drop <span class="op">=</span> <span class="va">True</span>, inplace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>filter_list <span class="op">=</span> [<span class="st">'경제'</span>, <span class="st">'인하대 입시'</span>, <span class="st">'관련 없는 기사'</span>, <span class="st">'인하대 총장'</span>, <span class="st">'부고'</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>inha_df <span class="op">=</span> topic_df[<span class="op">~</span>topic_df[<span class="st">'군집'</span>].isin(filter_list)]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>inha_df.reset_index(drop <span class="op">=</span> <span class="va">True</span>, inplace <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -805,12 +809,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론재현 보고서</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론 재현 보고서</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./accident_report.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./inha_network.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Network Analysis을 중심으로</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

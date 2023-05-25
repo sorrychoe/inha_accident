@@ -7,7 +7,7 @@ execute:
 book:
   title: "Inha_Accident_Report"
   author: "Jaeseong Choe"
-  date: today
+  date: 2023/03/19
   downloads: [epub]
   url: https://sorrychoe.com
   repo-url: https://github.com/juba/bookup-html/tree/main/examples/book
@@ -21,7 +21,7 @@ book:
     - part: "Reports"
       chapters:
         - inha_clustering.qmd
-        - accident_report.qmd
+        - inha_network.qmd
 
 
 format:

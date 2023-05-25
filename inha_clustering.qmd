@@ -1,5 +1,5 @@
 ---
-title: "1. Clustering analysis을 중심으로"
+title: "Clustering analysis을 중심으로"
 author: "sorrychoe"
 format: 
   html: 
@@ -34,7 +34,7 @@ plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams['figure.figsize'] = 8,8
 sns.set(font="Malgun Gothic", rc={"axes.unicode_minus":False}, style='white')
 
-news_df = pd.read_excel("./data_analysis/inha_3month.xlsx", engine = 'openpyxl')
+news_df = pd.read_excel("./data/inha_3month.xlsx", engine = 'openpyxl')
 ```
 
 ## 개요
@@ -46,7 +46,7 @@ news_df = pd.read_excel("./data_analysis/inha_3month.xlsx", engine = 'openpyxl')
 
 깊게 존재하는 의미 연결망 분석 및 담론 분석은 이후 보고서에서 작성하였다.
 
-## 1. 데이터 현황 및 필터링
+## 데이터 현황 및 필터링
 
 먼저 수집한 기사들의 언론사 구성 빈도는 다음과 같다.
 
@@ -65,7 +65,7 @@ news_df.drop(filt, inplace=True)
 news_df.reset_index(drop = True, inplace = True)
 ```
 
-## 2. 키워드 빈도 분석
+## 키워드 빈도 분석
 
 키워드 빈도 분석을 진행하였다. 단어 전체의 키워드를 추출한 후, 이를 워드클라우드로 변환하여 분석하였다.
 
@@ -81,7 +81,7 @@ key_words = bkp.counter_to_DataFrame(key_words)
 ```
 
 ```{python}
-wc = WordCloud(font_path = './data_analysis/NanumBarunGothic.ttf',
+wc = WordCloud(font_path = 'malgun',
     width = 500,
     height = 500,
     background_color='white').generate_from_frequencies(key_words.set_index('단어').to_dict()["빈도"])
@@ -104,7 +104,7 @@ plt.show()
 **조선일보**
 
 ```{python}
-bkp.press_keywords_wordcloud(news_df, '조선일보')
+bkp.keywords_wordcloud(news_df, '조선일보')
 ```
 
 <hr/>
@@ -112,7 +112,7 @@ bkp.press_keywords_wordcloud(news_df, '조선일보')
 **중앙일보**
 
 ```{python}
-bkp.press_keywords_wordcloud(news_df, '중앙일보')
+bkp.keywords_wordcloud(news_df, '중앙일보')
 ```
 
 <hr/>
@@ -120,7 +120,7 @@ bkp.press_keywords_wordcloud(news_df, '중앙일보')
 **동아일보**
 
 ```{python}
-bkp.press_keywords_wordcloud(news_df, '동아일보')
+bkp.keywords_wordcloud(news_df, '동아일보')
 ```
 
 <hr/>
@@ -128,7 +128,7 @@ bkp.press_keywords_wordcloud(news_df, '동아일보')
 **한겨례**
 
 ```{python}
-bkp.press_keywords_wordcloud(news_df, '한겨레')
+bkp.keywords_wordcloud(news_df, '한겨레')
 ```
 
 <hr/>
@@ -136,7 +136,7 @@ bkp.press_keywords_wordcloud(news_df, '한겨레')
 **경향신문**
 
 ```{python}
-bkp.press_keywords_wordcloud(news_df, '경향신문')
+bkp.keywords_wordcloud(news_df, '경향신문')
 ```
 
 <hr/>
@@ -224,11 +224,7 @@ visualizer.show()
 전반적으로 계수가 높지 않았다. 다만, 텍스트 데이터 특성상 실루엣 계수가 낮아도 의미적으로는 문제가 없는 경우가 다소 있어,'
 k 값은 elbow method의 결과인 12로 진행하기로 결정하였다. 
 
-<br/>
-
 ```{python}
-#| echo: false
-#| include: false
 kmeans.fit(norvec)
 ```
 

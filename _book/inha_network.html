@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="sorrychoe">
 
-<title>Inha_Accident_Report - 3&nbsp; 인하대학교 강간살인 사건 언론 재현 분석</title>
+<title>Inha_Accident_Report - 3&nbsp; Network Analysis을 중심으로</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inha_clustering.html">Reports</a></li><li class="breadcrumb-item"><a href="./accident_report.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inha_clustering.html">Reports</a></li><li class="breadcrumb-item"><a href="./inha_network.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Network Analysis을 중심으로</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -148,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론재현 보고서</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">인하대학교 강간 살인 사건 언론 재현 보고서</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -163,13 +163,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inha_clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Clustering analysis을 중심으로</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./accident_report.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span></a>
+  <a href="./inha_network.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Network Analysis을 중심으로</span></span></a>
   </div>
 </li>
       </ul>
@@ -185,24 +185,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요"><span class="header-section-number">3.1</span> 개요</a></li>
-  <li><a href="#단어-분석" id="toc-단어-분석" class="nav-link" data-scroll-target="#단어-분석"><span class="header-section-number">4</span> 단어 분석</a>
-  <ul class="collapse">
-  <li><a href="#보도-빈도-분석" id="toc-보도-빈도-분석" class="nav-link" data-scroll-target="#보도-빈도-분석"><span class="header-section-number">4.1</span> 보도 빈도 분석</a></li>
-  <li><a href="#군집-별-보도-분석" id="toc-군집-별-보도-분석" class="nav-link" data-scroll-target="#군집-별-보도-분석"><span class="header-section-number">4.2</span> 군집 별 보도 분석</a></li>
-  <li><a href="#언론사-별-단어-분석" id="toc-언론사-별-단어-분석" class="nav-link" data-scroll-target="#언론사-별-단어-분석"><span class="header-section-number">4.3</span> 언론사 별 단어 분석</a></li>
-  <li><a href="#press-network-analysis" id="toc-press-network-analysis" class="nav-link" data-scroll-target="#press-network-analysis"><span class="header-section-number">4.4</span> Press Network Analysis</a></li>
-  <li><a href="#sementic-network-analysis" id="toc-sementic-network-analysis" class="nav-link" data-scroll-target="#sementic-network-analysis"><span class="header-section-number">4.5</span> Sementic Network Analysis</a></li>
-  </ul></li>
+  <li><a href="#단어-분석" id="toc-단어-분석" class="nav-link" data-scroll-target="#단어-분석"><span class="header-section-number">3.2</span> 단어 분석</a></li>
+  <li><a href="#보도-빈도-분석" id="toc-보도-빈도-분석" class="nav-link" data-scroll-target="#보도-빈도-분석"><span class="header-section-number">3.3</span> 보도 빈도 분석</a></li>
+  <li><a href="#군집-별-보도-분석" id="toc-군집-별-보도-분석" class="nav-link" data-scroll-target="#군집-별-보도-분석"><span class="header-section-number">3.4</span> 군집 별 보도 분석</a></li>
+  <li><a href="#언론사-별-단어-분석" id="toc-언론사-별-단어-분석" class="nav-link" data-scroll-target="#언론사-별-단어-분석"><span class="header-section-number">3.5</span> 언론사 별 단어 분석</a></li>
+  <li><a href="#press-network-analysis" id="toc-press-network-analysis" class="nav-link" data-scroll-target="#press-network-analysis"><span class="header-section-number">3.6</span> Press Network Analysis</a></li>
+  <li><a href="#sementic-network-analysis" id="toc-sementic-network-analysis" class="nav-link" data-scroll-target="#sementic-network-analysis"><span class="header-section-number">3.7</span> Sementic Network Analysis</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/juba/bookup-html/tree/main/examples/book/edit/main/accident_report.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/juba/bookup-html/tree/main/examples/book/edit/main/inha_network.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></h1>
-<p class="subtitle lead">2. 의미연결망 분석을 중심으로</p>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Network Analysis을 중심으로</span></h1>
 </div>
 
 
@@ -235,8 +232,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="단어-분석" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> 단어 분석</h1>
+<section id="단어-분석" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="단어-분석"><span class="header-section-number">3.2</span> 단어 분석</h2>
 <p>먼저 기사에 사용된 단어를 분석한 결과, 총 4190개로 나타났다.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -267,8 +264,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-<section id="보도-빈도-분석" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="보도-빈도-분석"><span class="header-section-number">4.1</span> 보도 빈도 분석</h2>
+</section>
+<section id="보도-빈도-분석" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="보도-빈도-분석"><span class="header-section-number">3.3</span> 보도 빈도 분석</h2>
 <p>언론사 별 보도 빈도는 다음과 같다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>inha <span class="sc">%&gt;%</span> </span>
@@ -278,23 +276,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(언론사 <span class="ot">=</span> <span class="st">"언론사"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="tfrtdhlvba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tfrtdhlvba table {
+<div id="gddpufzbyg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gddpufzbyg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tfrtdhlvba thead, #tfrtdhlvba tbody, #tfrtdhlvba tfoot, #tfrtdhlvba tr, #tfrtdhlvba td, #tfrtdhlvba th {
+#gddpufzbyg thead, #gddpufzbyg tbody, #gddpufzbyg tfoot, #gddpufzbyg tr, #gddpufzbyg td, #gddpufzbyg th {
   border-style: none;
 }
 
-#tfrtdhlvba p {
+#gddpufzbyg p {
   margin: 0;
   padding: 0;
 }
 
-#tfrtdhlvba .gt_table {
+#gddpufzbyg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -320,12 +318,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_caption {
+#gddpufzbyg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tfrtdhlvba .gt_title {
+#gddpufzbyg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -337,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#tfrtdhlvba .gt_subtitle {
+#gddpufzbyg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -349,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#tfrtdhlvba .gt_heading {
+#gddpufzbyg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -361,13 +359,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_bottom_border {
+#gddpufzbyg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_col_headings {
+#gddpufzbyg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -382,7 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_col_heading {
+#gddpufzbyg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -402,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#tfrtdhlvba .gt_column_spanner_outer {
+#gddpufzbyg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -414,15 +412,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#tfrtdhlvba .gt_column_spanner_outer:first-child {
+#gddpufzbyg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tfrtdhlvba .gt_column_spanner_outer:last-child {
+#gddpufzbyg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tfrtdhlvba .gt_column_spanner {
+#gddpufzbyg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -434,11 +432,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#tfrtdhlvba .gt_spanner_row {
+#gddpufzbyg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tfrtdhlvba .gt_group_heading {
+#gddpufzbyg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -464,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#tfrtdhlvba .gt_empty_group_heading {
+#gddpufzbyg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -479,15 +477,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#tfrtdhlvba .gt_from_md > :first-child {
+#gddpufzbyg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tfrtdhlvba .gt_from_md > :last-child {
+#gddpufzbyg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tfrtdhlvba .gt_row {
+#gddpufzbyg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -506,7 +504,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#tfrtdhlvba .gt_stub {
+#gddpufzbyg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -519,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#tfrtdhlvba .gt_stub_row_group {
+#gddpufzbyg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -533,15 +531,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#tfrtdhlvba .gt_row_group_first td {
+#gddpufzbyg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tfrtdhlvba .gt_row_group_first th {
+#gddpufzbyg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tfrtdhlvba .gt_summary_row {
+#gddpufzbyg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -551,16 +549,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#tfrtdhlvba .gt_first_summary_row {
+#gddpufzbyg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_first_summary_row.thick {
+#gddpufzbyg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tfrtdhlvba .gt_last_summary_row {
+#gddpufzbyg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -570,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_grand_summary_row {
+#gddpufzbyg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -580,7 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#tfrtdhlvba .gt_first_grand_summary_row {
+#gddpufzbyg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -590,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_last_grand_summary_row_top {
+#gddpufzbyg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -600,11 +598,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_striped {
+#gddpufzbyg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tfrtdhlvba .gt_table_body {
+#gddpufzbyg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -613,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_footnotes {
+#gddpufzbyg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -627,7 +625,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_footnote {
+#gddpufzbyg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -636,7 +634,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#tfrtdhlvba .gt_sourcenotes {
+#gddpufzbyg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -650,7 +648,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#tfrtdhlvba .gt_sourcenote {
+#gddpufzbyg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -658,63 +656,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#tfrtdhlvba .gt_left {
+#gddpufzbyg .gt_left {
   text-align: left;
 }
 
-#tfrtdhlvba .gt_center {
+#gddpufzbyg .gt_center {
   text-align: center;
 }
 
-#tfrtdhlvba .gt_right {
+#gddpufzbyg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tfrtdhlvba .gt_font_normal {
+#gddpufzbyg .gt_font_normal {
   font-weight: normal;
 }
 
-#tfrtdhlvba .gt_font_bold {
+#gddpufzbyg .gt_font_bold {
   font-weight: bold;
 }
 
-#tfrtdhlvba .gt_font_italic {
+#gddpufzbyg .gt_font_italic {
   font-style: italic;
 }
 
-#tfrtdhlvba .gt_super {
+#gddpufzbyg .gt_super {
   font-size: 65%;
 }
 
-#tfrtdhlvba .gt_footnote_marks {
+#gddpufzbyg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tfrtdhlvba .gt_asterisk {
+#gddpufzbyg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tfrtdhlvba .gt_indent_1 {
+#gddpufzbyg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tfrtdhlvba .gt_indent_2 {
+#gddpufzbyg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tfrtdhlvba .gt_indent_3 {
+#gddpufzbyg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tfrtdhlvba .gt_indent_4 {
+#gddpufzbyg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tfrtdhlvba .gt_indent_5 {
+#gddpufzbyg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -760,8 +758,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>보도 빈도만 두고 본 결과, 3개월의 기간 동안 해당 어젠다를 중점적으로 다룬 언론사는 세계일보였다. 그 외에는 전반적으로 비슷한 수준의 보도를 진행하였다.</p>
 <hr>
 </section>
-<section id="군집-별-보도-분석" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="군집-별-보도-분석"><span class="header-section-number">4.2</span> 군집 별 보도 분석</h2>
+<section id="군집-별-보도-분석" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="군집-별-보도-분석"><span class="header-section-number">3.4</span> 군집 별 보도 분석</h2>
 <p>이전에 기사 필터링을 진행하여 나타난 군집들의 양상을 근거로 언론사들의 보도 스탠스를 유추하여 보았다.</p>
 <p>군집 별 기사 빈도는 다음과 같다.</p>
 <div class="cell">
@@ -772,23 +770,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(군집 <span class="ot">=</span> <span class="st">"군집"</span>, <span class="at">n =</span> <span class="st">'빈도'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="poluyzuvhm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#poluyzuvhm table {
+<div id="scadtzufzp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#scadtzufzp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#poluyzuvhm thead, #poluyzuvhm tbody, #poluyzuvhm tfoot, #poluyzuvhm tr, #poluyzuvhm td, #poluyzuvhm th {
+#scadtzufzp thead, #scadtzufzp tbody, #scadtzufzp tfoot, #scadtzufzp tr, #scadtzufzp td, #scadtzufzp th {
   border-style: none;
 }
 
-#poluyzuvhm p {
+#scadtzufzp p {
   margin: 0;
   padding: 0;
 }
 
-#poluyzuvhm .gt_table {
+#scadtzufzp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -814,12 +812,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_caption {
+#scadtzufzp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#poluyzuvhm .gt_title {
+#scadtzufzp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -831,7 +829,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#poluyzuvhm .gt_subtitle {
+#scadtzufzp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -843,7 +841,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#poluyzuvhm .gt_heading {
+#scadtzufzp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -855,13 +853,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_bottom_border {
+#scadtzufzp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_col_headings {
+#scadtzufzp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -876,7 +874,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_col_heading {
+#scadtzufzp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -896,7 +894,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#poluyzuvhm .gt_column_spanner_outer {
+#scadtzufzp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -908,15 +906,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#poluyzuvhm .gt_column_spanner_outer:first-child {
+#scadtzufzp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#poluyzuvhm .gt_column_spanner_outer:last-child {
+#scadtzufzp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#poluyzuvhm .gt_column_spanner {
+#scadtzufzp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -928,11 +926,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#poluyzuvhm .gt_spanner_row {
+#scadtzufzp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#poluyzuvhm .gt_group_heading {
+#scadtzufzp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -958,7 +956,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#poluyzuvhm .gt_empty_group_heading {
+#scadtzufzp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -973,15 +971,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#poluyzuvhm .gt_from_md > :first-child {
+#scadtzufzp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#poluyzuvhm .gt_from_md > :last-child {
+#scadtzufzp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#poluyzuvhm .gt_row {
+#scadtzufzp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1000,7 +998,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#poluyzuvhm .gt_stub {
+#scadtzufzp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1013,7 +1011,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#poluyzuvhm .gt_stub_row_group {
+#scadtzufzp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1027,15 +1025,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#poluyzuvhm .gt_row_group_first td {
+#scadtzufzp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#poluyzuvhm .gt_row_group_first th {
+#scadtzufzp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#poluyzuvhm .gt_summary_row {
+#scadtzufzp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1045,16 +1043,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#poluyzuvhm .gt_first_summary_row {
+#scadtzufzp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_first_summary_row.thick {
+#scadtzufzp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#poluyzuvhm .gt_last_summary_row {
+#scadtzufzp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1064,7 +1062,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_grand_summary_row {
+#scadtzufzp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1074,7 +1072,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#poluyzuvhm .gt_first_grand_summary_row {
+#scadtzufzp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1084,7 +1082,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_last_grand_summary_row_top {
+#scadtzufzp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,11 +1092,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_striped {
+#scadtzufzp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#poluyzuvhm .gt_table_body {
+#scadtzufzp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1107,7 +1105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_footnotes {
+#scadtzufzp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1121,7 +1119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_footnote {
+#scadtzufzp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1130,7 +1128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#poluyzuvhm .gt_sourcenotes {
+#scadtzufzp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1144,7 +1142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#poluyzuvhm .gt_sourcenote {
+#scadtzufzp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1152,63 +1150,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#poluyzuvhm .gt_left {
+#scadtzufzp .gt_left {
   text-align: left;
 }
 
-#poluyzuvhm .gt_center {
+#scadtzufzp .gt_center {
   text-align: center;
 }
 
-#poluyzuvhm .gt_right {
+#scadtzufzp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#poluyzuvhm .gt_font_normal {
+#scadtzufzp .gt_font_normal {
   font-weight: normal;
 }
 
-#poluyzuvhm .gt_font_bold {
+#scadtzufzp .gt_font_bold {
   font-weight: bold;
 }
 
-#poluyzuvhm .gt_font_italic {
+#scadtzufzp .gt_font_italic {
   font-style: italic;
 }
 
-#poluyzuvhm .gt_super {
+#scadtzufzp .gt_super {
   font-size: 65%;
 }
 
-#poluyzuvhm .gt_footnote_marks {
+#scadtzufzp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#poluyzuvhm .gt_asterisk {
+#scadtzufzp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#poluyzuvhm .gt_indent_1 {
+#scadtzufzp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#poluyzuvhm .gt_indent_2 {
+#scadtzufzp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#poluyzuvhm .gt_indent_3 {
+#scadtzufzp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#poluyzuvhm .gt_indent_4 {
+#scadtzufzp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#poluyzuvhm .gt_indent_5 {
+#scadtzufzp .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1264,7 +1262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>그 다음 인하대 사건 그 이후 군집에 해당하는 기사들의 언론사 구성 비율이다</p>
@@ -1285,7 +1283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>마지막으로 젠더 이슈에 대한 기사들의 언론사 구성 비율이다.</p>
@@ -1306,13 +1304,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
 </section>
-<section id="언론사-별-단어-분석" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="언론사-별-단어-분석"><span class="header-section-number">4.3</span> 언론사 별 단어 분석</h2>
+<section id="언론사-별-단어-분석" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="언론사-별-단어-분석"><span class="header-section-number">3.5</span> 언론사 별 단어 분석</h2>
 <p>언론사 별로 주로 사용한 단어는 다음과 같다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inha.words <span class="sc">%&gt;%</span> </span>
@@ -1324,7 +1322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>tf-idf를 활용하여 단어 별 상대 빈도를 도출했다.</p>
@@ -1339,13 +1337,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
 </section>
-<section id="press-network-analysis" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="press-network-analysis"><span class="header-section-number">4.4</span> Press Network Analysis</h2>
+<section id="press-network-analysis" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="press-network-analysis"><span class="header-section-number">3.6</span> Press Network Analysis</h2>
 <p>먼저, 언론사 간 네트워크 분석을 실시했다.</p>
 <p>본 분석은 tf-idf로 상대 빈도 분석을 진행한 데이터를 기준으로, 공동으로 등장하는 단어에 기반하여 네트워크 분석을 실시했다.</p>
 <p>분석 결과의 정확성 확보를 위해 한국어가 아닌 단어들(영문, 숫자 등)은 분석에서 제외했다.</p>
@@ -1354,13 +1352,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clust, press.nt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
 </section>
-<section id="sementic-network-analysis" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="sementic-network-analysis"><span class="header-section-number">4.5</span> Sementic Network Analysis</h2>
+<section id="sementic-network-analysis" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="sementic-network-analysis"><span class="header-section-number">3.7</span> Sementic Network Analysis</h2>
 <p>마지막으로 단어 간의 의미 연결망 분석을 실시했다. 네트워크 분석의 경우, 데이터를 통해 동시 출현 단어 행렬을 형성하고, 이를 토대로 quenteda를 활용하여 네트워크 분석을 시도했다.</p>
 <p>분석 결과는 다음과 같다.</p>
 <div class="cell">
@@ -1371,12 +1369,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">vertex_size =</span> size,</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">edge_size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="accident_report_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="inha_network_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1731,7 +1728,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./inha_clustering.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">인하대학교 강간살인 사건 언론 재현 분석</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Clustering analysis을 중심으로</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
