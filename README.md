@@ -3,7 +3,7 @@
 2022년 7월 15일에 발생한 인하대학교 재학생 강간살인 사건의 언론 재현 수준을 분석하는 프로젝트입니다. 
 
 ---
-보고서 링크 : 
+보고서 링크 : [inha_accident_report](https://sorrychoe.quarto.pub/inha_accident_report)
 
 
 ## Authors
