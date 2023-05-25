@@ -1,6 +1,5 @@
 ---
-title: "인하대학교 강간살인 사건 기사 군집 분석"
-subtitle: "1. Clustering analysis을 중심으로"
+title: "1. Clustering analysis을 중심으로"
 author: "sorrychoe"
 format: 
   html: 
@@ -74,7 +73,7 @@ news_df.reset_index(drop = True, inplace = True)
 
 ```{python}
 #| echo: false
-lis = bkp.keywords_list(news_df["키워드"])
+lis = bkp.keywords_list(news_df)
 key = bkp.keyword_parser(lis)
 key = bkp.duplication_remover(key)
 key_words = bkp.word_counter(key)
