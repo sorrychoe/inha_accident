@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: bba84aae-2761-47ed-a608-00b2241f4de3
+      url: 'https://sorrychoe.quarto.pub/inha_accident_report'

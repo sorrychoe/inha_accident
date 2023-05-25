@@ -1,5 +1,5 @@
 ---
-title: "인하대학교 강간살인 사건 언론 재현 분석"
+title: "인하대학교 강간살인 사건 기사 군집 분석"
 subtitle: "1. Clustering analysis을 중심으로"
 author: "sorrychoe"
 format: 
