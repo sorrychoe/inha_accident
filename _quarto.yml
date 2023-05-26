@@ -8,9 +8,8 @@ book:
   title: "Inha_Accident_Report"
   author: "Jaeseong Choe"
   date: 2023/03/19
-  downloads: [epub]
-  url: https://sorrychoe.com
-  repo-url: https://github.com/juba/bookup-html/tree/main/examples/book
+  downloads: [pdf]
+  repo-url: https://github.com/sorrychoe/inha_accident
   repo-actions: edit
   search: true
   reader-mode: true
