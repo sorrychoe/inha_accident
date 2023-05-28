@@ -213,6 +213,11 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-/.quarto/
-
+# Quarto
+*_files/
 /.luarc.json
+_freeze/
+_book/
+_extensions/
+_site
+.quarto/
